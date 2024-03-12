@@ -2,18 +2,18 @@ package com.uoi.softeng.app.dto;
 
 import java.util.List;
 
-public class PublicUserDTO {
-    private String name;
-    private String surname;
-    private String email;
-    private String address;
-    private Integer zipcode;
-    private List<Integer> ownedBooks;
-    private List<Integer> favouriteCategories;
-    private List<Integer> favouriteAuthors;
-    private List<Integer> requests;
+public class UserDTO {
+    public String name;
+    public String surname;
+    public String email;
+    public String address;
+    public Integer zipcode;
+    public List<Integer> ownedBooks;
+    public List<Integer> favouriteCategories;
+    public List<Integer> favouriteAuthors;
+    public List<Integer> requests;
 
-    public PublicUserDTO(){}
+    public UserDTO(){}
 
     public String getName(){
         return name;

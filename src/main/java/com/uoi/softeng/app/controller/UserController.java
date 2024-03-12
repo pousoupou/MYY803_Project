@@ -1,10 +1,11 @@
 package com.uoi.softeng.app.controller;
 
-import com.uoi.softeng.app.dto.PrivateUserDTO;
-import com.uoi.softeng.app.dto.PublicUserDTO;
+import com.uoi.softeng.app.dto.UserDTO;
 import com.uoi.softeng.app.model.User;
 import com.uoi.softeng.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -17,22 +18,37 @@ public class UserController {
 
     @GetMapping("/get/{permission}/{id}")
     public @ResponseBody User getUserData(@PathVariable("permission") Boolean perm, @PathVariable("id") Integer id){
-        Optional<User> publicUser = userRepo.findById(id);
-
         if(perm){
-            PrivateUserDTO privateData = new PrivateUserDTO(publicUser.get());
+            Optional<User> optUser = userRepo.findById(id);
 
-            return new User(privateData);
+            return optUser.get().omitPrivateData();
         } else {
-            return publicUser.get();
+            return null;
         }
     }
 
     @PostMapping("/add")
-    public @ResponseBody String addUserData(@RequestBody PublicUserDTO publicUserDTO){
-        User user = new User(publicUserDTO);
+    public @ResponseBody String addUserData(@RequestBody UserDTO userDTO){
+        User user = new User(userDTO);
         userRepo.save(user);
 
-        return "SUCCESS";
+        return "ADDED";
+    }
+
+    @PutMapping("/update/{id}")
+    public @ResponseBody String updateUserData(@PathVariable("id") Integer id, @RequestBody UserDTO userDTO){
+        User user = userRepo.findUserByEmail(userDTO.email);
+
+        user.updateUserData(userDTO);
+        userRepo.save(user);
+
+        return "UPDATED";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteUser(@PathVariable("id") Integer id){
+        userRepo.deleteById(id);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

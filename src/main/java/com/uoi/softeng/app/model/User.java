@@ -1,7 +1,6 @@
 package com.uoi.softeng.app.model;
 
-import com.uoi.softeng.app.dto.PrivateUserDTO;
-import com.uoi.softeng.app.dto.PublicUserDTO;
+import com.uoi.softeng.app.dto.UserDTO;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -33,24 +32,40 @@ public class User {
 
     public User(){}
 
-    public User(PublicUserDTO publicUserDTO){
-        this.name = publicUserDTO.getName();
-        this.surname = publicUserDTO.getSurname();
-        this.email = publicUserDTO.getEmail();
-        this.address = publicUserDTO.getAddress();
-        this.zipcode = publicUserDTO.getZipcode();
-        this.ownedBooks = publicUserDTO.getOwnedBooks();
-        this.favouriteCategories = publicUserDTO.getFavouriteCategories();
-        this.favouriteAuthors = publicUserDTO.getFavouriteAuthors();
-        this.requests = publicUserDTO.getRequests();
+    public User(UserDTO userDTO){
+        this.name = userDTO.name;
+        this.surname = userDTO.surname;
+        this.email = userDTO.email;
+        this.address = userDTO.address;
+        this.zipcode = userDTO.zipcode;
+        this.ownedBooks = userDTO.ownedBooks;
+        this.favouriteCategories = userDTO.favouriteCategories;
+        this.favouriteAuthors = userDTO.favouriteAuthors;
+        this.requests = userDTO.requests;
     }
 
-    public User(PrivateUserDTO privateUserDTO){
-        this.name = privateUserDTO.getName();
-        this.surname = privateUserDTO.getSurname();
-        this.email = privateUserDTO.getEmail();
-        this.address = privateUserDTO.getAddress();
-        this.zipcode = privateUserDTO.getZipcode();
+    public void updateUserData(UserDTO userDTO){
+        this.name = userDTO.name;
+        this.surname = userDTO.surname;
+        this.email = userDTO.email;
+        this.address = userDTO.address;
+        this.zipcode = userDTO.zipcode;
+        this.ownedBooks = userDTO.ownedBooks;
+        this.favouriteCategories = userDTO.favouriteCategories;
+        this.favouriteAuthors = userDTO.favouriteAuthors;
+        this.requests = userDTO.requests;
+    }
+
+    public User omitPrivateData(){
+        User privateUser = new User();
+
+        privateUser.name = this.name;
+        privateUser.surname = this.surname;
+        privateUser.email = this.email;
+        privateUser.address = this.address;
+        privateUser.zipcode = this.zipcode;
+
+        return privateUser;
     }
 
     public Integer getId(){
