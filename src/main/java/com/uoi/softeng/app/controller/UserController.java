@@ -37,7 +37,7 @@ public class UserController {
 
     @PutMapping("/update/{id}")
     public @ResponseBody String updateUserData(@PathVariable("id") Integer id, @RequestBody UserDTO userDTO){
-        User user = userRepo.findUserByEmail(userDTO.email);
+        User user = userRepo.findById(id).get();
 
         user.updateUserData(userDTO);
         userRepo.save(user);
