@@ -10,9 +10,25 @@ public class Category {
 
     private String category;
 
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Category(){}
+
+    public Category(String category){
+        this.category = category;
+    }
 
     public Integer getId(){
         return Id;
+    }
+
+    public String getCategory(){
+        return category;
     }
 }

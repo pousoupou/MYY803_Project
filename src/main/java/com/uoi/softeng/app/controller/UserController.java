@@ -39,7 +39,7 @@ public class UserController {
     public @ResponseBody String updateUserData(@PathVariable("id") Integer id, @RequestBody UserDTO userDTO){
         User user = userRepo.findById(id).get();
 
-        user.updateUserData(userDTO);
+        user.updateData(userDTO);
         userRepo.save(user);
 
         return "UPDATED";

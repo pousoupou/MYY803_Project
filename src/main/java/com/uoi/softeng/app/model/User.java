@@ -18,17 +18,20 @@ public class User {
     private String address;
     private Integer zipcode;
 
-    @ElementCollection
-    private List<Integer> ownedBooks;
+    @OneToMany(mappedBy = "user")
+    private List<Book> ownedBooks;
 
-    @ElementCollection
-    private List<Integer> favouriteCategories;
+    @OneToMany(mappedBy = "user")
+    private List<Category> favouriteCategories;
 
-    @ElementCollection
-    private List<Integer> favouriteAuthors;
+    @OneToMany(mappedBy = "user")
+    private List<Author> favouriteAuthors;
 
-    @ElementCollection
-    private List<Integer> requests;
+    @OneToMany(mappedBy = "requester")
+    private List<Request> requestsAsRequester;
+
+    @OneToMany(mappedBy = "recipient")
+    private List<Request> requestsAsRecipient;
 
     public User(){}
 
@@ -36,24 +39,26 @@ public class User {
         this.name = userDTO.name;
         this.surname = userDTO.surname;
         this.email = userDTO.email;
+        this.password = userDTO.password;
         this.address = userDTO.address;
         this.zipcode = userDTO.zipcode;
         this.ownedBooks = userDTO.ownedBooks;
         this.favouriteCategories = userDTO.favouriteCategories;
         this.favouriteAuthors = userDTO.favouriteAuthors;
-        this.requests = userDTO.requests;
+//        this.requests = userDTO.requests;
     }
 
-    public void updateUserData(UserDTO userDTO){
+    public void updateData(UserDTO userDTO){
         this.name = userDTO.name;
         this.surname = userDTO.surname;
         this.email = userDTO.email;
+        this.password = userDTO.password;
         this.address = userDTO.address;
         this.zipcode = userDTO.zipcode;
         this.ownedBooks = userDTO.ownedBooks;
         this.favouriteCategories = userDTO.favouriteCategories;
         this.favouriteAuthors = userDTO.favouriteAuthors;
-        this.requests = userDTO.requests;
+//        this.requests = userDTO.requests;
     }
 
     public User omitPrivateData(){
@@ -96,63 +101,17 @@ public class User {
         return zipcode;
     }
 
-    public List<Integer> getOwnedBooks(){
+    public List<Book> getOwnedBooks(){
         return ownedBooks;
     }
 
-    public List<Integer> getFavouriteCategories(){
+    public List<Category> getFavouriteCategories(){
         return favouriteCategories;
     }
 
-    public List<Integer> getFavouriteAuthors(){
+    public List<Author> getFavouriteAuthors(){
         return favouriteAuthors;
     }
 
-    public List<Integer> getRequests(){
-        return requests;
-    }
 
-    public void setId(Integer id){
-        this.id = id;
-    }
-
-    public void setName(String name){
-        this.name = name;
-    }
-
-    public void setSurname(String surname){
-        this.surname = surname;
-    }
-
-    public void setEmail(String email){
-        this.email = email;
-    }
-
-    public void setPassword(String password){
-        this.password = password;
-    }
-
-    public void setAddress(String address){
-        this.address = address;
-    }
-
-    public void setZipcode(Integer zipcode){
-        this.zipcode = zipcode;
-    }
-
-    public void setOwnedBooks(List<Integer> ownedBooks){
-        this.ownedBooks = ownedBooks;
-    }
-
-    public void setFavouriteCategories(List<Integer> favouriteCategories){
-        this.favouriteCategories = favouriteCategories;
-    }
-
-    public void setFavouriteAuthors(List<Integer> favouriteAuthors){
-        this.favouriteAuthors = favouriteAuthors;
-    }
-
-    public void setRequests(List<Integer> requests){
-        this.requests = requests;
-    }
 }

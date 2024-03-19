@@ -9,11 +9,24 @@ public class Author {
     private Integer Id;
 
     private String name;
-    private String surname;
+
+    @OneToOne(mappedBy = "author")
+    private Book book;
+
+    @ManyToOne
+    private User user;
 
     public Author(){}
 
+    public void updateAuthorData(){
+
+    }
+
     public Integer getId(){
         return Id;
+    }
+
+    public String getName(){
+        return name;
     }
 }

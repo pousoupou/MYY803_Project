@@ -9,57 +9,45 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private Integer sellerID;
-    private Integer buyerID;
-    private Integer bookID;
+    @ManyToOne
+    @JoinColumn(name = "requester_id")
+    private User requester;
+
+    @ManyToOne
+    @JoinColumn(name = "recipient_id")
+    private User recipient;
+
+    @OneToOne(mappedBy = "request")
+    private Book book;
+
     private String type;        // Either REQUEST, or OFFER
 
     public Request(){}
 
     public Request(RequestDTO requestDTO){
-        this.sellerID = requestDTO.sellerID;
-        this.buyerID = requestDTO.buyerID;
-        this.bookID = requestDTO.bookID;
+        this.requester = requestDTO.requester;
+        this.recipient = requestDTO.recipient;
+        this.book = requestDTO.book;
         this.type = requestDTO.type;
-    }
-
-    public Integer getSellerID(){
-        return sellerID;
-    }
-
-    public Integer getBuyerID(){
-        return buyerID;
-    }
-
-    public Integer getBookID(){
-        return bookID;
-    }
-
-    public String getType(){
-        return type;
-    }
-
-    public void setSeller(Integer sellerID){
-        this.sellerID = sellerID;
-    }
-
-    public void setBuyer(Integer buyerID){
-        this.buyerID = buyerID;
-    }
-
-    public void setBook(Integer bookID){
-        this.bookID = bookID;
-    }
-
-    public void setType(String type){
-        this.type = type;
-    }
-
-    public void setId(Integer id){
-        this.id = id;
     }
 
     public Integer getId(){
         return id;
+    }
+
+    public User getRequester(){
+        return requester;
+    }
+
+    public User getRecipient(){
+        return recipient;
+    }
+
+    public Book getBook(){
+        return book;
+    }
+
+    public String getType(){
+        return type;
     }
 }
