@@ -1,8 +1,10 @@
 package com.uoi.softeng.app.controller;
 
+import com.uoi.softeng.app.dto.LoginDTO;
 import com.uoi.softeng.app.dto.UserDTO;
 import com.uoi.softeng.app.model.User;
 import com.uoi.softeng.app.repository.UserRepository;
+import com.uoi.softeng.app.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,44 +13,45 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
     @Autowired
-    private UserRepository userRepo;
+    private IUserService userService;
 
-    @GetMapping("/get/{permission}/{id}")
-    public @ResponseBody User getUserData(@PathVariable("permission") Boolean perm, @PathVariable("id") Integer id){
-        if(perm){
-            Optional<User> optUser = userRepo.findById(id);
-
-            return optUser.get().omitPrivateData();
-        } else {
-            return null;
-        }
-    }
+//    @GetMapping("/get/{permission}/{uuid}")
+//    public @ResponseBody User getUserData(@PathVariable("permission") Boolean perm, @PathVariable("uuid") Integer uuid){
+//
+//    }
 
     @PostMapping("/add")
     public @ResponseBody String addUserData(@RequestBody UserDTO userDTO){
-        User user = new User(userDTO);
-        userRepo.save(user);
+        userService.addUser(userDTO);
 
         return "ADDED";
     }
 
-    @PutMapping("/update/{id}")
-    public @ResponseBody String updateUserData(@PathVariable("id") Integer id, @RequestBody UserDTO userDTO){
-        User user = userRepo.findById(id).get();
-
-        user.updateData(userDTO);
-        userRepo.save(user);
+    @PutMapping("/update/{uuid}")
+    public @ResponseBody String updateUserData(@PathVariable("uuid") String uuid, @RequestBody UserDTO userDTO){
+        userService.updateUser(uuid, userDTO);
 
         return "UPDATED";
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteUser(@PathVariable("id") Integer id){
-        userRepo.deleteById(id);
+    @DeleteMapping("/delete/{uuid}")
+    public ResponseEntity deleteUser(@PathVariable("uuid") String uuid){
+        userService.deleteUser(uuid);
 
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public @ResponseBody String login(@RequestBody LoginDTO loginDTO){
+        String uuid = userService.userLogin(loginDTO);
+
+        if(uuid != null){
+            return uuid;
+        } else {
+            return "Wrong email or password";
+        }
     }
 }

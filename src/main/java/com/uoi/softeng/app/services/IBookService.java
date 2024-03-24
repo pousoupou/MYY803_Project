@@ -8,7 +8,7 @@ import java.util.List;
 public interface IBookService {
     List<Book> getAllBooks();
 
-    void addBook(BookDTO book);
+    void addBook(BookDTO bookDTO);
 
     Book getBookByISBN(Integer isbn);
 

@@ -2,14 +2,18 @@ package com.uoi.softeng.app.model;
 
 import com.uoi.softeng.app.dto.UserDTO;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     private String name;
     private String surname;
@@ -72,46 +76,4 @@ public class User {
 
         return privateUser;
     }
-
-    public Integer getId(){
-        return id;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public String getSurname(){
-        return surname;
-    }
-
-    public String getEmail(){
-        return email;
-    }
-
-    public String getPassword(){
-        return password;
-    }
-
-    public String getAddress(){
-        return address;
-    }
-
-    public Integer getZipcode(){
-        return zipcode;
-    }
-
-    public List<Book> getOwnedBooks(){
-        return ownedBooks;
-    }
-
-    public List<Category> getFavouriteCategories(){
-        return favouriteCategories;
-    }
-
-    public List<Author> getFavouriteAuthors(){
-        return favouriteAuthors;
-    }
-
-
 }
