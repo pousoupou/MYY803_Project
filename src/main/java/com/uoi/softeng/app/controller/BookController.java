@@ -3,6 +3,7 @@ package com.uoi.softeng.app.controller;
 import com.uoi.softeng.app.dto.BookDTO;
 import com.uoi.softeng.app.model.Book;
 import com.uoi.softeng.app.repository.BookRepository;
+import com.uoi.softeng.app.services.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,39 +13,40 @@ import java.util.List;
 @RequestMapping("/book")
 public class BookController {
     @Autowired
-    private BookRepository bookRepo;
+    private IBookService iBookService;
 
-    @GetMapping("/get/{id}")
-    public @ResponseBody Book getBookById(@PathVariable("id") Integer id){
-        return bookRepo.findById(id).get();
+    @GetMapping("/get/{isbn}")
+    public @ResponseBody Book getBookByIsbn(@PathVariable("isbn") Integer isbn){
+        return iBookService.getBookByISBN(isbn);
     }
 
     @GetMapping("/get")
     public @ResponseBody List<Book> getAllBooks(){
-        return (List<Book>) bookRepo.findAll();
+        return iBookService.getAllBooks();
     }
 
     @PostMapping("/add")
     public @ResponseBody String addBook(@RequestBody BookDTO bookDTO){
-        Book book = new Book(bookDTO);
-
-        bookRepo.save(book);
+        iBookService.addBook(bookDTO);
 
         return "ADDED";
     }
 
-    @PutMapping("/update/{id}")
-    public @ResponseBody String updateBook(@PathVariable("id") Integer id, @RequestBody BookDTO bookDTO){
-        Book book = bookRepo.findById(id).get();
-        book.updateData(bookDTO);
-        bookRepo.save(book);
+//    @PutMapping("/update/{id}")
+//    public @ResponseBody String updateBook(@PathVariable("id") Integer id, @RequestBody BookDTO bookDTO){
+//        Book book = bookRepo.findById(id).get();
+//        book.updateData(bookDTO);
+//        bookRepo.save(book);
+//
+//        return "UPDATED";
+//    }
 
-        return "UPDATED";
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public @ResponseBody String deleteBook(@PathVariable("id") Integer id){
-        bookRepo.deleteById(id);
+    @DeleteMapping("/delete/{isbn}")
+    public @ResponseBody String deleteBookByIsbn(@PathVariable("isbn") Integer isbn){
+        Book book = iBookService.getBookByISBN(isbn);
+        if(book.decreaseQuantity() <= 0){
+            iBookService.deleteBook(book);
+        }
 
         return "DELETED";
     }

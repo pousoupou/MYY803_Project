@@ -8,6 +8,7 @@ import java.util.List;
 public class BookDTO {
     public Integer isbn;
     public String title;
+    public Integer quantity;
     public Author author;
     public List<Category> categories;
 }
