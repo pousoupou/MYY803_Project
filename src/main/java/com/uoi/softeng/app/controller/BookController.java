@@ -32,14 +32,7 @@ public class BookController {
         return "ADDED";
     }
 
-//    @PutMapping("/update/{id}")
-//    public @ResponseBody String updateBook(@PathVariable("id") Integer id, @RequestBody BookDTO bookDTO){
-//        Book book = bookRepo.findById(id).get();
-//        book.updateData(bookDTO);
-//        bookRepo.save(book);
-//
-//        return "UPDATED";
-//    }
+
 
     @DeleteMapping("/delete/{isbn}")
     public @ResponseBody String deleteBookByIsbn(@PathVariable("isbn") Integer isbn){

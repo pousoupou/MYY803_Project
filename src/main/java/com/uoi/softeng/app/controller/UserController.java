@@ -18,10 +18,7 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-//    @GetMapping("/get/{permission}/{uuid}")
-//    public @ResponseBody User getUserData(@PathVariable("permission") Boolean perm, @PathVariable("uuid") Integer uuid){
-//
-//    }
+
 
     @PostMapping("/add")
     public @ResponseBody String addUserData(@RequestBody UserDTO userDTO){
@@ -44,7 +41,7 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/temp.html")
     public @ResponseBody String login(@RequestBody LoginDTO loginDTO){
         String uuid = userService.userLogin(loginDTO);
 

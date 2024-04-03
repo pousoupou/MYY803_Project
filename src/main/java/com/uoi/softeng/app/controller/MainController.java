@@ -1,6 +1,7 @@
 package com.uoi.softeng.app.controller;
 
 
+import com.uoi.softeng.app.dto.LoginDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +43,8 @@ public class MainController {
     /** Login form. */
     @RequestMapping("/login.html")
     public String login() {
+        UserController userController = new UserController();
+        //userController.login();
         return "login";
     }
 }
