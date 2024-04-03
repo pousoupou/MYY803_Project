@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -21,28 +22,40 @@ public class Book {
 
     private Integer quantity;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Category> categories;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToMany(mappedBy = "ownedBooks", cascade = CascadeType.ALL)
+    private List<User> users;
 
     @OneToOne
     @JoinColumn(name = "request_id")
     private Request request;
 
-    public Book(){}
+    public Book(){
+        this.quantity = 1;
+        this.users = new ArrayList<>();
+    }
+
+    public Book(Book book){
+        this.id = book.id;
+        this.isbn = book.isbn;
+        this.title = book.title;
+        this.quantity = book.quantity;
+        this.author = book.author;
+        this.categories = book.categories;
+        this.users = book.users;
+        this.request = book.request;
+    }
 
     public Book(BookDTO bookDTO){
         this.isbn = bookDTO.isbn;
         this.title = bookDTO.title;
         this.quantity = 1;
-        this.author = bookDTO.author;
         this.categories = bookDTO.categories;
     }
 
@@ -50,7 +63,6 @@ public class Book {
         this.isbn = bookDTO.isbn;
         this.title = bookDTO.title;
         this.quantity = bookDTO.quantity;
-        this.author = bookDTO.author;
         this.categories = bookDTO.categories;
     }
 
@@ -60,5 +72,9 @@ public class Book {
 
     public Integer decreaseQuantity(){
         return this.quantity --;
+    }
+
+    public void addUser(User user){
+        this.users.add(user);
     }
 }

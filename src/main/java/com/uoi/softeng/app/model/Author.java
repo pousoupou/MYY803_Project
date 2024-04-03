@@ -1,32 +1,37 @@
 package com.uoi.softeng.app.model;
 
+import com.uoi.softeng.app.dto.AuthorDTO;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.List;
+
+@Getter
+@Setter
 @Entity
 public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer Id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String Id;
 
     private String name;
 
-    @OneToOne(mappedBy = "author")
-    private Book book;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Book> books;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
     public Author(){}
 
-    public void updateAuthorData(){
-
+    public Author(AuthorDTO authorDTO){
+        this.name = authorDTO.name;
+        this.books = authorDTO.books;
+        this.user = authorDTO.user;
     }
 
-    public Integer getId(){
-        return Id;
-    }
-
-    public String getName(){
-        return name;
+    public Author(String name){
+        this.name = name;
     }
 }

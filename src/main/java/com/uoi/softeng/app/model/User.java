@@ -22,19 +22,24 @@ public class User {
     private String address;
     private Integer zipcode;
 
-    @OneToMany(mappedBy = "user")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "book_ownership",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
     private List<Book> ownedBooks;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Category> favouriteCategories;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Author> favouriteAuthors;
 
-    @OneToMany(mappedBy = "requester")
+    @OneToMany(mappedBy = "requester", cascade = CascadeType.ALL)
     private List<Request> requestsAsRequester;
 
-    @OneToMany(mappedBy = "recipient")
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
     private List<Request> requestsAsRecipient;
 
     public User(){}

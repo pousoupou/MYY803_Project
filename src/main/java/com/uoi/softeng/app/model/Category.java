@@ -1,7 +1,11 @@
 package com.uoi.softeng.app.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 public class Category {
     @Id
@@ -22,13 +26,5 @@ public class Category {
 
     public Category(String category){
         this.category = category;
-    }
-
-    public Integer getId(){
-        return Id;
-    }
-
-    public String getCategory(){
-        return category;
     }
 }
