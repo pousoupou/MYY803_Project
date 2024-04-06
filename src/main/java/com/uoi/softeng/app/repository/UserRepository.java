@@ -4,7 +4,7 @@ import com.uoi.softeng.app.model.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
+
 
 public interface UserRepository extends CrudRepository<User, String> {
     @Query(value = "SELECT * FROM user WHERE email = :email AND password = :password", nativeQuery = true)

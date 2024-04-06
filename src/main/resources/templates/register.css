@@ -1,0 +1,103 @@
+/* Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa; /* Light background color */
+}
+
+.gradient-custom-3 {
+    background: linear-gradient(to right, #FFC107, #FF9800); /* Gradient background for the form */
+}
+
+.card {
+    background-color: #ffffff; /* White card background */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Shadow effect for the card */
+}
+
+.card-body {
+    padding: 40px;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.btn-success {
+    background-color: #4CAF50; /* Green button color */
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.form-label {
+    color: #495057; /* Form label color */
+}
+
+.form-outline {
+    position: relative;
+}
+
+.form-outline input {
+    padding-top: 28px; /* Space for label */
+}
+
+.form-outline label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #6c757d; /* Label color */
+    transition: all 0.2s ease-out;
+    pointer-events: none;
+}
+
+.form-outline input:focus + label,
+.form-outline input:not(:placeholder-shown) + label {
+    top: -20px;
+    font-size: 12px;
+    color: #495057; /* Adjusted label color on focus or when input has value */
+}
+
+.text-body {
+    color: #000000; /* Body text color */
+}
+
+.text-muted {
+    color: #6c757d; /* Muted text color */
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-center a {
+    color: #007bff; /* Link color */
+}
+
+.text-center a:hover {
+    text-decoration: none;
+}
+
+/* Responsive Styling */
+@media (max-width: 576px) {
+    .card-body {
+        padding: 20px;
+    }
+}

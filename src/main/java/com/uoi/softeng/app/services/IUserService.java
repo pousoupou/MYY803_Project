@@ -13,7 +13,7 @@ public interface IUserService {
 
     User getUserByEmail(String email);
 
-    void addUser(UserDTO userDTO);
+    void registerUser(UserDTO userDTO);
 
     void updateUser(String uuid, UserDTO userDTO);
 

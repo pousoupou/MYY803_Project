@@ -2,15 +2,14 @@ package com.uoi.softeng.app.controller;
 
 import com.uoi.softeng.app.dto.LoginDTO;
 import com.uoi.softeng.app.dto.UserDTO;
-import com.uoi.softeng.app.model.User;
-import com.uoi.softeng.app.repository.UserRepository;
+
 import com.uoi.softeng.app.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/user")
@@ -22,7 +21,7 @@ public class UserController {
 
     @PostMapping("/add")
     public @ResponseBody String addUserData(@RequestBody UserDTO userDTO){
-        userService.addUser(userDTO);
+        userService.registerUser(userDTO);
 
         return "ADDED";
     }

@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     private String name;
@@ -51,7 +51,7 @@ public class User {
         this.password = userDTO.password;
         this.address = userDTO.address;
         this.zipcode = userDTO.zipcode;
-        this.ownedBooks = userDTO.ownedBooks;
+        //this.ownedBooks = userDTO.ownedBooks;
         this.favouriteCategories = userDTO.favouriteCategories;
         this.favouriteAuthors = userDTO.favouriteAuthors;
 //        this.requests = userDTO.requests;
@@ -64,7 +64,7 @@ public class User {
         this.password = userDTO.password;
         this.address = userDTO.address;
         this.zipcode = userDTO.zipcode;
-        this.ownedBooks = userDTO.ownedBooks;
+        //this.ownedBooks = userDTO.ownedBooks;
         this.favouriteCategories = userDTO.favouriteCategories;
         this.favouriteAuthors = userDTO.favouriteAuthors;
 //        this.requests = userDTO.requests;
