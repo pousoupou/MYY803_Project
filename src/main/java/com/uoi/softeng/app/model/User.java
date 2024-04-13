@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     private String name;
@@ -22,13 +23,13 @@ public class User {
     private String address;
     private Integer zipcode;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "book_ownership",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private List<Book> ownedBooks;
+    private List<Book> ownedBooks = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Category> favouriteCategories;
@@ -42,7 +43,9 @@ public class User {
     @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
     private List<Request> requestsAsRecipient;
 
-    public User(){}
+    public User(){
+        this.ownedBooks = new ArrayList<>();
+    }
 
     public User(UserDTO userDTO){
         this.name = userDTO.name;
@@ -51,7 +54,7 @@ public class User {
         this.password = userDTO.password;
         this.address = userDTO.address;
         this.zipcode = userDTO.zipcode;
-        //this.ownedBooks = userDTO.ownedBooks;
+        this.ownedBooks = userDTO.ownedBooks;
         this.favouriteCategories = userDTO.favouriteCategories;
         this.favouriteAuthors = userDTO.favouriteAuthors;
 //        this.requests = userDTO.requests;
@@ -80,5 +83,9 @@ public class User {
         privateUser.zipcode = this.zipcode;
 
         return privateUser;
+    }
+
+    public void addBook(Book book){
+        this.ownedBooks.add(book);
     }
 }

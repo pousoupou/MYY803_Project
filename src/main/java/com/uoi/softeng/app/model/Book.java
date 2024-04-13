@@ -4,6 +4,8 @@ import com.uoi.softeng.app.dto.BookDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.text.WordUtils;
+import org.hibernate.action.internal.OrphanRemovalAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +31,8 @@ public class Book {
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Category> categories;
 
-    @ManyToMany(mappedBy = "ownedBooks", cascade = CascadeType.ALL)
-    private List<User> users;
+    @ManyToMany(mappedBy = "ownedBooks", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<User> users = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "request_id")
@@ -44,26 +46,37 @@ public class Book {
     public Book(Book book){
         this.id = book.id;
         this.isbn = book.isbn;
-        this.title = book.title;
+        this.title = WordUtils.capitalizeFully(book.title);
         this.quantity = book.quantity;
         this.author = book.author;
         this.categories = book.categories;
-        this.users = book.users;
+        if(book.users == null || book.users.isEmpty()){
+            this.users = new ArrayList<>();
+        } else {
+            this.users = book.users;
+        }
         this.request = book.request;
     }
 
     public Book(BookDTO bookDTO){
         this.isbn = bookDTO.isbn;
-        this.title = bookDTO.title;
+        this.title = WordUtils.capitalizeFully(bookDTO.title);
         this.quantity = 1;
         this.categories = bookDTO.categories;
     }
 
     public void updateData(BookDTO bookDTO){
         this.isbn = bookDTO.isbn;
-        this.title = bookDTO.title;
+        this.title = WordUtils.capitalizeFully(bookDTO.title);
         this.quantity = bookDTO.quantity;
         this.categories = bookDTO.categories;
+    }
+
+    public void updateData(Book book){
+//        this.isbn = book.getIsbn();
+//        this.title = book.getTitle();
+        this.quantity = book.getQuantity();
+//        this.categories = book.getCategories();
     }
 
     public Integer increaseQuantity(){
@@ -76,5 +89,21 @@ public class Book {
 
     public void addUser(User user){
         this.users.add(user);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean ret = false;
+
+        if(o instanceof Book){
+            Book book = (Book) o;
+            ret = this.isbn.equals(book.isbn);
+        }
+        return ret;
+    }
+
+    @Override
+    public int hashCode(){
+        return this.isbn.hashCode();
     }
 }

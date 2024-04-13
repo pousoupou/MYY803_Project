@@ -7,6 +7,7 @@ import com.uoi.softeng.app.model.Category;
 import com.uoi.softeng.app.model.User;
 import com.uoi.softeng.app.repository.AuthorRepository;
 import com.uoi.softeng.app.repository.BookRepository;
+import com.uoi.softeng.app.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class BookService implements IBookService{
     BookRepository bookRepo;
 
     @Autowired
+    UserRepository userRepo;
+
+    @Autowired
     IAuthorService authorService;
 
     @Override
@@ -31,6 +35,11 @@ public class BookService implements IBookService{
     @Override
     public List<User> getAllOwners(){
         return null;
+    }
+
+    @Override
+    public void addOwner(User user){
+
     }
 
     @Override
@@ -55,15 +64,16 @@ public class BookService implements IBookService{
 
     @Override
     public void addBook(Book book){
-        if(this.getBookByISBN(book.getIsbn()) == null){
+        Book existing = this.getBookByISBN(book.getIsbn());
+        if(existing == null){
             if(!authorService.exists(book.getAuthor().getName())){
                 authorService.addAuthorByName(book.getAuthor().getName());
             }
             book.setAuthor(authorService.getAuthorByName(book.getAuthor().getName()));
             bookRepo.save(book);
         } else {
-            book.increaseQuantity();
-            bookRepo.save(book);
+            existing.increaseQuantity();
+            bookRepo.save(existing);
         }
     }
 
@@ -111,9 +121,23 @@ public class BookService implements IBookService{
 
     @Override
     public void updateBook(Book book){
+//        Book temp = bookRepo.findBookByIsbn(book.getIsbn());
+//
+//        if(temp == null){
+//            throw new RuntimeException("Book does not exist");
+//        } else if(!temp.getTitle().equals(book.getTitle())){
+//            throw new RuntimeException("Book title does not match");
+//        } else if(!temp.getAuthor().getName().equals(book.getAuthor().getName())){
+//            throw new RuntimeException("Author does not match");
+//        } else {
+////            book.setId(temp.getId());
+//            temp.setAuthor(authorService.getAuthorByName(book.getAuthor().getName()));
+//            bookRepo.save(temp);
+//        }
         bookRepo.save(book);
     }
 
+    // Prepei prwta na broume to biblio sthn db kai meta na to kanoume update
     private void updateBook(Book book, BookDTO bookDTO){
         if(book != null){
             if(bookDTO.isbn != null){

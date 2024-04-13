@@ -11,6 +11,8 @@ public interface IBookService {
 
     List<User> getAllOwners();
 
+    void addOwner(User user);
+
     void addBook(BookDTO bookDTO);
 
     void addBook(Book book);

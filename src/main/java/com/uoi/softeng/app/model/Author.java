@@ -4,6 +4,7 @@ import com.uoi.softeng.app.dto.AuthorDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.text.WordUtils;
 
 import java.util.List;
 
@@ -26,12 +27,12 @@ public class Author {
     public Author(){}
 
     public Author(AuthorDTO authorDTO){
-        this.name = authorDTO.name;
+        this.name = WordUtils.capitalizeFully(authorDTO.name);
         this.books = authorDTO.books;
         this.user = authorDTO.user;
     }
 
     public Author(String name){
-        this.name = name;
+        this.name = WordUtils.capitalizeFully(name);
     }
 }
