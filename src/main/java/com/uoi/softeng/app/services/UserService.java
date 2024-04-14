@@ -42,19 +42,35 @@ public class UserService implements IUserService{
     public void registerUser(UserDTO userDTO){
         User existing = this.getUserByEmail(userDTO.email);
 
+        System.out.println("Existing user: " + existing);
+
+
         if(existing == null){
-            for(Book book : userDTO.ownedBooks){
-                Book existingBook = bookService.getBookByISBN(book.getIsbn());
-                if(existingBook == null){
-                    bookService.addBook(book);
-                } else {
-                    existingBook.increaseQuantity();
-                    bookService.updateBook(existingBook);
-                    userDTO.ownedBooks.set(userDTO.ownedBooks.indexOf(book), existingBook);
-                }
+//            for(Book book : userDTO.ownedBooks){
+//                Book existingBook = bookService.getBookByISBN(book.getIsbn());
+//                if(existingBook == null){
+//                    bookService.addBook(book);
+//                } else {
+//                    existingBook.increaseQuantity();
+//                    bookService.updateBook(existingBook);
+//                    userDTO.ownedBooks.set(userDTO.ownedBooks.indexOf(book), existingBook);
+//                }
+//            }
+            //System.out.println("UserDTO: " + userDTO);
+
+            try {
+                User user = new User(userDTO);
+                System.out.println("New user: " + user);
+
+                userRepo.save(user);
+
+                System.out.println("User: " + user);
+            } catch (Exception e){
+                System.out.println("Error: " + e);
             }
-            User user = new User(userDTO);
-            userRepo.save(user);
+
+
+
         } else {
             throw new RuntimeException("User Already Exists!");
         }

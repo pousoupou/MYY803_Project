@@ -19,9 +19,9 @@ public class User {
     private String name;
     private String surname;
     private String email;
-    private String password;
+    //private String password;
     private String address;
-    private Integer zipcode;
+    //private Integer zipcode;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -51,12 +51,12 @@ public class User {
         this.name = userDTO.name;
         this.surname = userDTO.surname;
         this.email = userDTO.email;
-        this.password = userDTO.password;
+        //this.password = userDTO.password;
         this.address = userDTO.address;
-        this.zipcode = userDTO.zipcode;
-        this.ownedBooks = userDTO.ownedBooks;
+        //this.zipcode = userDTO.zipcode;
+        //this.ownedBooks = userDTO.ownedBooks;
         this.favouriteCategories = userDTO.favouriteCategories;
-        this.favouriteAuthors = userDTO.favouriteAuthors;
+        //this.favouriteAuthors = userDTO.favouriteAuthors;
 //        this.requests = userDTO.requests;
     }
 
@@ -64,12 +64,12 @@ public class User {
         this.name = userDTO.name;
         this.surname = userDTO.surname;
         this.email = userDTO.email;
-        this.password = userDTO.password;
+        //this.password = userDTO.password;
         this.address = userDTO.address;
-        this.zipcode = userDTO.zipcode;
+        //this.zipcode = userDTO.zipcode;
         //this.ownedBooks = userDTO.ownedBooks;
         this.favouriteCategories = userDTO.favouriteCategories;
-        this.favouriteAuthors = userDTO.favouriteAuthors;
+        //this.favouriteAuthors = userDTO.favouriteAuthors;
 //        this.requests = userDTO.requests;
     }
 
@@ -80,7 +80,7 @@ public class User {
         privateUser.surname = this.surname;
         privateUser.email = this.email;
         privateUser.address = this.address;
-        privateUser.zipcode = this.zipcode;
+        //privateUser.zipcode = this.zipcode;
 
         return privateUser;
     }

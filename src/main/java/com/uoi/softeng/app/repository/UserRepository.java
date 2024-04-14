@@ -11,4 +11,8 @@ public interface UserRepository extends CrudRepository<User, String> {
     User findByEmailAndPassword(String email, String password);
 
     User findByEmail(String email);
+
+    //@Query(value = "INSERT INTO user (name, surname, email, password, address, zipcode) VALUES (:name, :surname, :email, :password, :address, :zipcode)", nativeQuery = true)
+
+
 }

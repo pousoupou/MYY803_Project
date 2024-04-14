@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error Page</title>
+    <link rel="stylesheet" type="text/css" href="/templates/error.css" />
+</head>
+<body>
+    <h1>Something went wrong!</h1>
+    <!--/*@thymesVar id="errorMessage" type=""*/-->
+    <p th:text="${errorMessage}"></p>
+    <a href="/register">Go back to Home Page</a>
+</body>
+</html>
