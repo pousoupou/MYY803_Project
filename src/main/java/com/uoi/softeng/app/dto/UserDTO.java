@@ -4,9 +4,13 @@ import com.uoi.softeng.app.model.Author;
 import com.uoi.softeng.app.model.Book;
 import com.uoi.softeng.app.model.Category;
 import com.uoi.softeng.app.model.Request;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
 public class UserDTO {
     public String name;
     public String surname;
