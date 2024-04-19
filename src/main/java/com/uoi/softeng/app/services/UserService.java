@@ -3,6 +3,7 @@ package com.uoi.softeng.app.services;
 import com.uoi.softeng.app.dto.LoginDTO;
 import com.uoi.softeng.app.dto.UserDTO;
 import com.uoi.softeng.app.model.Book;
+import com.uoi.softeng.app.model.Category;
 import com.uoi.softeng.app.model.User;
 import com.uoi.softeng.app.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -21,6 +22,9 @@ public class UserService implements IUserService{
 
     @Autowired
     IBookService bookService;
+
+    @Autowired
+    ICategoryService catService;
 
     @Override
     public List<User> getAllUsers(){
@@ -43,16 +47,31 @@ public class UserService implements IUserService{
         User existing = this.getUserByEmail(userDTO.email);
 
         if(existing == null){
-//            for(Book book : userDTO.ownedBooks){
-//                Book existingBook = bookService.getBookByISBN(book.getIsbn());
-//                if(existingBook == null){
-//                    bookService.addBook(book);
-//                } else {
-//                    existingBook.increaseQuantity();
-//                    bookService.updateBook(existingBook);
-//                    userDTO.ownedBooks.set(userDTO.ownedBooks.indexOf(book), existingBook);
-//                }
-//            }
+            if(userDTO.ownedBooks != null){
+                for(Book book : userDTO.getOwnedBooks()){
+                    Book existingBook = bookService.getBookByISBN(book.getIsbn());
+                    if(existingBook == null){
+                        bookService.addBook(book);
+                    } else {
+                        existingBook.increaseQuantity();
+                        bookService.updateBook(existingBook);
+                        userDTO.ownedBooks.set(userDTO.ownedBooks.indexOf(book), existingBook);
+                    }
+                }
+            }
+            System.out.println(userDTO.favouriteCategories == null);
+            if(userDTO.favouriteCategories != null){
+                for(Category cat : userDTO.favouriteCategories){
+                    Category existingCat = catService.getCategoryByName(cat.getCategoryName());
+                    if(existingCat == null){
+                        System.out.println("Category not found");
+                        catService.addCategory(cat);
+                    } else {
+                        System.out.println("Category found");
+                        userDTO.favouriteCategories.set(userDTO.favouriteCategories.indexOf(cat), existingCat);
+                    }
+                }
+            }
 
             try {
                 User user = new User(userDTO);

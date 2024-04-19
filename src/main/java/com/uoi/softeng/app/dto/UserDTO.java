@@ -17,9 +17,9 @@ public class UserDTO {
     public String email;
     public String password;
     public String address;
-    //public Integer zipcode;
-    //public List<Book> ownedBooks;
+    public Integer zipcode;
+    public List<Book> ownedBooks;
     public List<Category> favouriteCategories;
-    //public List<Author> favouriteAuthors;
+    public List<Author> favouriteAuthors;
     public List<Request> requests;
 }

@@ -9,10 +9,10 @@ import lombok.Setter;
 @Entity
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer Id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String Id;
 
-    private String category;
+    private String categoryName;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
@@ -24,7 +24,7 @@ public class Category {
 
     public Category(){}
 
-    public Category(String category){
-        this.category = category;
+    public Category(String categoryName){
+        this.categoryName = categoryName;
     }
 }

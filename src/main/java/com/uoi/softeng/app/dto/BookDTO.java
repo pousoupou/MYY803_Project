@@ -1,6 +1,5 @@
 package com.uoi.softeng.app.dto;
 
-import com.uoi.softeng.app.model.Author;
 import com.uoi.softeng.app.model.Category;
 import com.uoi.softeng.app.model.User;
 

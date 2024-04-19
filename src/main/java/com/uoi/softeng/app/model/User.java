@@ -19,9 +19,9 @@ public class User {
     private String name;
     private String surname;
     private String email;
-    //private String password;
+    private String password;
     private String address;
-    //private Integer zipcode;
+    private Integer zipcode;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -29,7 +29,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private List<Book> ownedBooks = new ArrayList<>();
+    private List<Book> ownedBooks;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Category> favouriteCategories;
@@ -51,12 +51,12 @@ public class User {
         this.name = userDTO.name;
         this.surname = userDTO.surname;
         this.email = userDTO.email;
-        //this.password = userDTO.password;
+        this.password = userDTO.password;
         this.address = userDTO.address;
-        //this.zipcode = userDTO.zipcode;
-        //this.ownedBooks = userDTO.ownedBooks;
+        this.zipcode = userDTO.zipcode;
+        this.ownedBooks = userDTO.ownedBooks;
         this.favouriteCategories = userDTO.favouriteCategories;
-        //this.favouriteAuthors = userDTO.favouriteAuthors;
+        this.favouriteAuthors = userDTO.favouriteAuthors;
 //        this.requests = userDTO.requests;
     }
 
