@@ -22,28 +22,33 @@ public class RegisterController {
     public String registerPage(Model model) {
         model.addAttribute("user", new UserDTO());
 
-        List<Category> categories = new ArrayList<>();
-        categories.add(new Category("Art"));
-        categories.add(new Category("Comic"));
-        categories.add(new Category("Fantasy"));
-        categories.add(new Category("Fiction"));
-        categories.add(new Category("Biography"));
-        categories.add(new Category("History"));
-        categories.add(new Category("Science"));
-        categories.add(new Category("Literature"));
-        categories.add(new Category("Adventure"));
-        categories.add(new Category("Crime"));
-        categories.add(new Category("Other"));
+        List<String> categories = new ArrayList<>();
+        categories.add("Art");
+        categories.add("Comic");
+        categories.add("Fantasy");
+        categories.add("Fiction");
+        categories.add("Biography");
+        categories.add("History");
+        categories.add("Science");
+        categories.add("Literature");
+        categories.add("Adventure");
+        categories.add("Crime");
+        categories.add("Other");
         model.addAttribute("categories", categories);
 
         return "register";
     }
 
     @PostMapping("/save")
-    public String registerUser(@ModelAttribute("user") UserDTO userDTO, @RequestParam(value = "favCats", defaultValue = "") List<Category> favCats, Model model) {
+    public String registerUser(@ModelAttribute("user") UserDTO userDTO, @RequestParam(value = "favCats") String[] favCats, Model model) {
         try {
-            System.out.println(favCats.getFirst().getCategoryName());
-            userDTO.setFavouriteCategories(favCats);
+            List<Category> categories = new ArrayList<>();
+            for (String cat : favCats) {
+                Category category = new Category(cat);
+                categories.add(category);
+            }
+            System.out.println(categories.getFirst().getCategoryName());
+            userDTO.setFavouriteCategories(categories);
 //            System.out.println(userDTO.favouriteCategories.size() + "\t" + userDTO.favouriteCategories.get(0).getCategoryName());
             userService.registerUser(userDTO);
             return "redirect:/login";
