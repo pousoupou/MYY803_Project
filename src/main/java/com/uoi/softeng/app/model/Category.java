@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -18,9 +20,8 @@ public class Category {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToMany(mappedBy = "favouriteCategories", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<User> user;
 
     public Category(){}
 

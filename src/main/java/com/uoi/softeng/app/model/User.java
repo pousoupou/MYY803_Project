@@ -31,7 +31,12 @@ public class User {
     )
     private List<Book> ownedBooks;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "user_categories",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     private List<Category> favouriteCategories;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

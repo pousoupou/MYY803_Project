@@ -40,14 +40,13 @@ public class RegisterController {
     }
 
     @PostMapping("/save")
-    public String registerUser(@ModelAttribute("user") UserDTO userDTO, @RequestParam(value = "favCats") String[] favCats, Model model) {
+    public String registerUser(@ModelAttribute("user") UserDTO userDTO, @RequestParam("favCats") String[] favCats, Model model) {
         try {
             List<Category> categories = new ArrayList<>();
-            for (String cat : favCats) {
-                Category category = new Category(cat);
-                categories.add(category);
+            for(String cat : favCats) {
+                categories.add(new Category(cat));
             }
-            System.out.println(categories.getFirst().getCategoryName());
+//            System.out.println(categories.getFirst().getCategoryName());
             userDTO.setFavouriteCategories(categories);
 //            System.out.println(userDTO.favouriteCategories.size() + "\t" + userDTO.favouriteCategories.get(0).getCategoryName());
             userService.registerUser(userDTO);
