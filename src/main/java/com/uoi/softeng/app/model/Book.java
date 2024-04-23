@@ -28,7 +28,7 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "books", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Category> categories;
 
     @ManyToMany(mappedBy = "ownedBooks", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -62,14 +62,14 @@ public class Book {
         this.isbn = bookDTO.isbn;
         this.title = WordUtils.capitalizeFully(bookDTO.title);
         this.quantity = 1;
-        this.categories = bookDTO.categories;
+//        this.categories = bookDTO.categories;
     }
 
     public void updateData(BookDTO bookDTO){
         this.isbn = bookDTO.isbn;
         this.title = WordUtils.capitalizeFully(bookDTO.title);
         this.quantity = bookDTO.quantity;
-        this.categories = bookDTO.categories;
+//        this.categories = bookDTO.categories;
     }
 
     public void updateData(Book book){

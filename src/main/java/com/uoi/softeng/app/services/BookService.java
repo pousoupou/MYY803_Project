@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,9 @@ public class BookService implements IBookService{
 
     @Autowired
     IAuthorService authorService;
+
+    @Autowired
+    ICategoryService categoryService;
 
     @Override
     public List<Book> getAllBooks(){
@@ -45,6 +49,7 @@ public class BookService implements IBookService{
     @Override
     public void addBook(BookDTO bookDTO){
         Book book = this.getBookByISBN(bookDTO.isbn);
+        List<Category> categories = new ArrayList<>();
 
         if(book == null){
             Book newBook = new Book(bookDTO);
@@ -54,6 +59,15 @@ public class BookService implements IBookService{
             }
 
             newBook.setAuthor(authorService.getAuthorByName(bookDTO.author));
+
+            for(String cat : bookDTO.categories){
+                Category category = new Category(cat);
+                category.addBook(newBook);
+                categoryService.addCategory(category);
+                categories.add(category);
+            }
+
+            newBook.setCategories(categories);
 
             bookRepo.save(newBook);
         } else {
@@ -139,34 +153,34 @@ public class BookService implements IBookService{
 
     // Prepei prwta na broume to biblio sthn db kai meta na to kanoume update
     private void updateBook(Book book, BookDTO bookDTO){
-        if(book != null){
-            if(bookDTO.isbn != null){
-                book.setIsbn(bookDTO.isbn);
-            }
-            if(bookDTO.title != null){
-                book.setTitle(bookDTO.title);
-            }
-            if(bookDTO.quantity != null){
-                book.setQuantity(bookDTO.quantity);
-            }
-            if(bookDTO.author != null){
-                book.setAuthor(authorService.getAuthorByName(bookDTO.author));
-            }
-            if(!bookDTO.users.isEmpty()){
-                for(User user : bookDTO.users){
-                    if(!book.getUsers().contains(user)){
-                        book.getUsers().add(user);
-                    }
-                }
-            }
-            if(!bookDTO.categories.isEmpty()){
-                for(Category cat : bookDTO.categories){
-                    if(!book.getCategories().contains(cat)){
-                        book.getCategories().add(cat);
-                    }
-                }
-            }
-            bookRepo.save(book);
-        }
+//        if(book != null){
+//            if(bookDTO.isbn != null){
+//                book.setIsbn(bookDTO.isbn);
+//            }
+//            if(bookDTO.title != null){
+//                book.setTitle(bookDTO.title);
+//            }
+//            if(bookDTO.quantity != null){
+//                book.setQuantity(bookDTO.quantity);
+//            }
+//            if(bookDTO.author != null){
+//                book.setAuthor(authorService.getAuthorByName(bookDTO.author));
+//            }
+//            if(!bookDTO.users.isEmpty()){
+//                for(User user : bookDTO.users){
+//                    if(!book.getUsers().contains(user)){
+//                        book.getUsers().add(user);
+//                    }
+//                }
+//            }
+//            if(!bookDTO.categories.isEmpty()){
+//                for(Category cat : bookDTO.categories){
+//                    if(!book.getCategories().contains(cat)){
+//                        book.getCategories().add(cat);
+//                    }
+//                }
+//            }
+//            bookRepo.save(book);
+//        }
     }
 }
