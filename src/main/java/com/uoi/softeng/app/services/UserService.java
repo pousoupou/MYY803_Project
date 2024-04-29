@@ -8,6 +8,7 @@ import com.uoi.softeng.app.model.User;
 import com.uoi.softeng.app.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,11 @@ public class UserService implements IUserService{
     @Transactional
     @Override
     public void registerUser(UserDTO userDTO){
+        userDTO.name = WordUtils.capitalizeFully(userDTO.name);
+        userDTO.surname = WordUtils.capitalizeFully(userDTO.surname);
+        userDTO.email = userDTO.email.toLowerCase();
+        userDTO.address = WordUtils.capitalizeFully(userDTO.address);
+
         User existing = this.getUserByEmail(userDTO.email);
 
         if(existing == null){

@@ -5,6 +5,7 @@ import com.uoi.softeng.app.model.Author;
 import com.uoi.softeng.app.model.Book;
 import com.uoi.softeng.app.repository.AuthorRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,8 @@ public class AuthorService implements IAuthorService{
 
     @Override
     public Author getAuthorByName(String name){
+        name = WordUtils.capitalizeFully(name);
+
         if(this.exists(name)){
             return authorRepo.findByName(name);
         }
@@ -31,6 +34,7 @@ public class AuthorService implements IAuthorService{
 
     @Override
     public void addAuthor(AuthorDTO authorDTO){
+        authorDTO.name = WordUtils.capitalizeFully(authorDTO.name);
         Author author = authorRepo.findByName(authorDTO.name);
 
         if(author == null){
@@ -41,6 +45,7 @@ public class AuthorService implements IAuthorService{
 
     @Override
     public void addAuthorByName(String name){
+        name = WordUtils.capitalizeFully(name);
         Author existing = authorRepo.findByName(name);
 
         if(existing == null){

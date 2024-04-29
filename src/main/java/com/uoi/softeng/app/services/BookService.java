@@ -9,6 +9,7 @@ import com.uoi.softeng.app.repository.AuthorRepository;
 import com.uoi.softeng.app.repository.BookRepository;
 import com.uoi.softeng.app.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,8 @@ public class BookService implements IBookService{
 
     @Override
     public void addBook(BookDTO bookDTO){
+        bookDTO.title = WordUtils.capitalizeFully(bookDTO.title);
+
         Book book = this.getBookByISBN(bookDTO.isbn);
         List<Category> categories = new ArrayList<>();
 
