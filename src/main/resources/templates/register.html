@@ -20,8 +20,14 @@
         <label for="email">Email:</label>
         <input type="email" th:field="*{email}" id="email" name="email" required><br>
 
+        <label for="password">Password:</label>
+        <input type="password" th:field="*{password}" id="password" name="password" required><br>
+
         <label for="address">Address:</label>
         <input type="text" th:field="*{address}" id="address" name="address" required><br>
+
+        <label for="zipcode">ZipCode:</label>
+        <input type="number" th:field="*{zipcode}" id="zipcode" name="zipcode" required><br>
 
         <div class="checkbox-container">
             <label for="categories">Preferred Book Categories:</label>
