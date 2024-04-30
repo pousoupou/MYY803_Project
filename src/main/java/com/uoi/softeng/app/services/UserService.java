@@ -10,14 +10,22 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
-public class UserService implements IUserService{
+public class UserService implements IUserService, UserDetailsService {
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
     UserRepository userRepo;
 
@@ -79,6 +87,8 @@ public class UserService implements IUserService{
                 }
             }
 
+            userDTO.password = bCryptPasswordEncoder.encode(userDTO.password);
+
             try {
                 User user = new User(userDTO);
                 userRepo.save(user);
@@ -105,5 +115,20 @@ public class UserService implements IUserService{
     @Override
     public void deleteUser(String uuid){
         userRepo.deleteById(uuid);
+    }
+
+    @Override
+    public boolean isUserPresent(User user) {
+        Optional<User> storedUser = Optional.ofNullable(userRepo.findByEmail(user.getEmail()));
+        return storedUser.isPresent();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return Optional.ofNullable(userRepo.findByEmail(username)).orElseThrow(
+                ()-> new UsernameNotFoundException(
+                        String.format("USER_NOT_FOUND %s", username)
+                )
+        );
     }
 }

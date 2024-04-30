@@ -18,4 +18,6 @@ public interface IUserService {
     void updateUser(String uuid, UserDTO userDTO);
 
     void deleteUser(String uuid);
+
+    public boolean isUserPresent(User user);
 }

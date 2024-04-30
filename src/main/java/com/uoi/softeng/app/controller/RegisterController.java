@@ -46,11 +46,9 @@ public class RegisterController {
             for(String cat : favCats) {
                 categories.add(new Category(cat));
             }
-//            System.out.println(categories.getFirst().getCategoryName());
             userDTO.setFavouriteCategories(categories);
-//            System.out.println(userDTO.favouriteCategories.size() + "\t" + userDTO.favouriteCategories.get(0).getCategoryName());
             userService.registerUser(userDTO);
-            return "redirect:/login";
+            return "";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "redirect:/register";
