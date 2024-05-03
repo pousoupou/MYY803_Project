@@ -26,9 +26,9 @@ public class LoginController {
     @RequestMapping("/login")
     public String loginUser(@ModelAttribute("loginDTO") LoginDTO loginDTO){
         if(encoder.matches(loginDTO.getPassword(), userService.getUserByEmail(loginDTO.getEmail()).getPassword())){
-            return "hello";
+            return "redirect:/hello";
         }
 
-        return "error";
+        return "redirect:/error";
     }
 }

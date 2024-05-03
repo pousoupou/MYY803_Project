@@ -48,7 +48,7 @@ public class RegisterController {
             }
             userDTO.setFavouriteCategories(categories);
             userService.registerUser(userDTO);
-            return "save";
+            return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "redirect:/register";
