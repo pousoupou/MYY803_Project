@@ -23,7 +23,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
          * simple automated controllers pre-configured
          * with status code and/or a view
          */
-        registry.addViewController("/").setViewName("register");
+        registry.addViewController("/").setViewName("home");
         registry.addViewController("/register").setViewName("register");
         registry.addViewController("/login").setViewName("login");
     }

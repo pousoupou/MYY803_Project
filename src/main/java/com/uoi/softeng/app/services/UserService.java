@@ -87,7 +87,7 @@ public class UserService implements IUserService, UserDetailsService {
                 }
             }
 
-            //userDTO.password = bCryptPasswordEncoder.encode(userDTO.password);
+            userDTO.password = bCryptPasswordEncoder.encode(userDTO.password);
 
             try {
                 User user = new User(userDTO);
