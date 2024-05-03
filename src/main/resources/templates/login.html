@@ -15,10 +15,10 @@
 <body>
 <div class="container">
 
-    <form th:action="@{auth/login}" method="POST" >
+    <form th:action="@{login/user}" method="POST" th:object="${loginDTO}">
         <h3 th:text="Login"></h3>
-        <input type="email" name="email" th:placeholder="Email" /> <br /><br />
-        <input type="password" th:placeholder="Password" name="password" /> <br /><br />
+        <input type="email" name="email" th:field="*{email}" th:placeholder="Email" /> <br /><br />
+        <input type="password" name="password" th:field="*{password}" th:placeholder="Password" /> <br /><br />
         <button type="Submit" class="btn btn-info col-2"> Login </button>
         <a th:href="@{register}" class="btn btn-primary col-2"> Register </a><br />
 
