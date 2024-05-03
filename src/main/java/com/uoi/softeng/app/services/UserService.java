@@ -24,7 +24,7 @@ import java.util.Optional;
 @Service
 public class UserService implements IUserService, UserDetailsService {
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     UserRepository userRepo;

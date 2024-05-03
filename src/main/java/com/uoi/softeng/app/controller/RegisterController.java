@@ -16,7 +16,7 @@ import java.util.List;
 public class RegisterController {
 
     @Autowired
-    private IUserService userService;
+    IUserService userService;
 
     @GetMapping("")
     public String registerPage(Model model) {
