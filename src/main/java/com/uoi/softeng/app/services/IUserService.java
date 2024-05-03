@@ -20,4 +20,6 @@ public interface IUserService {
     void deleteUser(String uuid);
 
     public boolean isUserPresent(User user);
+
+    UserDTO getUser(String uuid);
 }

@@ -5,45 +5,68 @@ import com.uoi.softeng.app.dto.UserDTO;
 
 import com.uoi.softeng.app.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/user")
+@Controller
+@RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private IUserService userService;
 
+    @GetMapping("/add")
+    public String addUserData(Model model){
+        model.addAttribute("userDTO", new UserDTO());
+
+        return "addUser";
+    }
+
     @PostMapping("/add")
-    public @ResponseBody String addUserData(@RequestBody UserDTO userDTO){
+    public String addUserData(@ModelAttribute UserDTO userDTO){
         userService.registerUser(userDTO);
 
-        return "ADDED";
+        return "redirect:/user/add";
     }
 
-    @PutMapping("/update/{uuid}")
-    public @ResponseBody String updateUserData(@PathVariable("uuid") String uuid, @RequestBody UserDTO userDTO){
+    @GetMapping("/update/{uuid}")
+    public String updateUserData(@PathVariable("uuid") String uuid, Model model){
+        UserDTO userDTO = userService.getUser(uuid);
+        model.addAttribute("userDTO", userDTO);
+        return "updateUser";
+    }
+
+    @PostMapping("/update/{uuid}")
+    public String updateUserData(@PathVariable("uuid") String uuid, @ModelAttribute UserDTO userDTO){
         userService.updateUser(uuid, userDTO);
-
-        return "UPDATED";
+        return "redirect:/user/update/" + uuid;
     }
 
-    @DeleteMapping("/delete/{uuid}")
-    public ResponseEntity deleteUser(@PathVariable("uuid") String uuid){
+    @GetMapping("/delete/{uuid}")
+    public String deleteUser(@PathVariable("uuid") String uuid){
         userService.deleteUser(uuid);
-
-        return new ResponseEntity(HttpStatus.OK);
+        return "redirect:/user/list";
     }
 
-    @PostMapping("/temp.html")
-    public @ResponseBody String login(@RequestBody LoginDTO loginDTO){
-        String uuid = userService.userLogin(loginDTO);
+//    @GetMapping("/login")
+//    public String login(Model model){
+//        model.addAttribute("loginDTO", new LoginDTO());
+//        return "login";
+//    }
+//
+//    @PostMapping("/login")
+//    public String login(@ModelAttribute LoginDTO loginDTO, Model model){
+//        String uuid = userService.userLogin(loginDTO);
+//
+//        if(uuid != null){
+//            model.addAttribute("uuid", uuid);
+//            return "redirect:/user/home";
+//        } else {
+//            model.addAttribute("error", "Wrong email or password");
+//            return "login";
+//        }
+//    }
 
-        if(uuid != null){
-            return uuid;
-        } else {
-            return "Wrong email or password";
-        }
-    }
+
 }

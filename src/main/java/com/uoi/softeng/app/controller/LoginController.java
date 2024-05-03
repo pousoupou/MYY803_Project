@@ -8,24 +8,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/auth")
 public class LoginController {
 
     @Autowired
     private IUserService userService;
 
-    @GetMapping
+    @GetMapping("/login")
     public String loginPage(Model model){
         model.addAttribute("loginDTO", new LoginDTO());
         return "login";
     }
 
-    @PostMapping
+    @PostMapping("/login")
     public String loginUser(@ModelAttribute("loginDTO") LoginDTO loginDTO){
         String uuid = userService.userLogin(loginDTO);
 
         if(uuid != null){
-            return "redirect:/home";
+            return "redirect:/register";
         } else {
             return "login";
         }

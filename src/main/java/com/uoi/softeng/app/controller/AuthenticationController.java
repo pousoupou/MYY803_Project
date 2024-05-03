@@ -9,12 +9,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/")
 public class AuthenticationController {
     @Autowired
     UserService userService;
 
 
+    @RequestMapping("/home")
+    public String home(){
+        return "home";
+    }
 
 
 

@@ -40,24 +40,24 @@ public class WebSecurityConfig{
 //                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
 //                        .requestMatchers("/user/**").hasAnyAuthority("USER")
 //                        .requestMatchers("/css/**").permitAll()
-                        .requestMatchers("/", "/login", "/register", "/save", "/resources/**").permitAll()
+                        .requestMatchers("/home", "/login", "/register", "/save", "/resources/**").permitAll()
                         .anyRequest().permitAll()
         );
 
-//        http.formLogin(fL -> fL.loginPage("/login")
-//                .failureUrl("/login?error=true")
-//                .successHandler(customSecuritySuccessHandler)
-//                .usernameParameter("username")
-//                .passwordParameter("password")
-//        );
-//
-//        http.logout(logOut -> logOut.logoutUrl("/logout")
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                .logoutSuccessUrl("/")
-//        );
-//
-//
-//        http.authenticationProvider(authenticationProvider());
+        http.formLogin(fL -> fL.loginPage("/login")
+                .failureUrl("/login?error=true")
+                .successHandler(customSecuritySuccessHandler)
+                .usernameParameter("username")
+                .passwordParameter("password")
+        );
+
+        http.logout(logOut -> logOut.logoutUrl("/logout")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+        );
+
+
+        http.authenticationProvider(authenticationProvider());
 
         return http.build();
     }
