@@ -1,5 +1,8 @@
 package com.uoi.softeng.app.model;
 
+import lombok.Getter;
+
+@Getter
 public enum Role {
     USER("User"),
     ADMIN("Admin");
@@ -10,7 +13,4 @@ public enum Role {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
 }

@@ -9,14 +9,14 @@
     <title>User Profile</title>
 </head>
 <body>
-<div class="container">
+<div class="container" th:object="${user}">
 
     <h2>Welcome to User Dashboard</h2>
 
     <br> <br> <hr> <br> <br>
 
-    <h4>Logged as: <span ></span></h4>
-    <h4>Has role: <span ></span></h4>
+    <h4 th:text="*{'Logged as: ' + name + ' ' + surname}"></h4>
+    <h4 th:text="*{'Has role: ' + role.value}"></h4>
 
     <br> <br> <hr> <br> <br>
 
