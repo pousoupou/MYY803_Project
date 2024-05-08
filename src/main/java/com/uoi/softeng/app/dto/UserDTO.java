@@ -1,9 +1,6 @@
 package com.uoi.softeng.app.dto;
 
-import com.uoi.softeng.app.model.Author;
-import com.uoi.softeng.app.model.Book;
-import com.uoi.softeng.app.model.Category;
-import com.uoi.softeng.app.model.Request;
+import com.uoi.softeng.app.model.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +15,7 @@ public class UserDTO {
     public String password;
     public String address;
     public Integer zipcode;
+    public Role role;
     public List<Book> ownedBooks;
     public List<Category> favouriteCategories;
     public List<Author> favouriteAuthors;

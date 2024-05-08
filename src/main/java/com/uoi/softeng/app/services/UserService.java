@@ -4,6 +4,7 @@ import com.uoi.softeng.app.dto.LoginDTO;
 import com.uoi.softeng.app.dto.UserDTO;
 import com.uoi.softeng.app.model.Book;
 import com.uoi.softeng.app.model.Category;
+import com.uoi.softeng.app.model.Role;
 import com.uoi.softeng.app.model.User;
 import com.uoi.softeng.app.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -57,6 +58,7 @@ public class UserService implements IUserService, UserDetailsService {
         userDTO.surname = WordUtils.capitalizeFully(userDTO.surname);
         userDTO.email = userDTO.email.toLowerCase();
         userDTO.address = WordUtils.capitalizeFully(userDTO.address);
+        userDTO.role = Role.USER;
 
         User existing = this.getUserByEmail(userDTO.email);
 

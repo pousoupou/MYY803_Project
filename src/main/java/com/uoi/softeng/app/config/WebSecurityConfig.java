@@ -37,11 +37,11 @@ public class WebSecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
                 (authz) -> authz
-//                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-//                        .requestMatchers("/user/**").hasAnyAuthority("USER")
-//                        .requestMatchers("/css/**").permitAll()
-                        .requestMatchers("/home", "/login", "/register", "/save", "/resources/**").permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/**", "/home", "/login", "/register", "/save", "/resources/**").permitAll()
+                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/**").hasAnyAuthority("USER")
+                        .anyRequest().authenticated()
+//                        .anyRequest().permitAll()
         );
 
         http.formLogin(fL -> fL.loginPage("/login")

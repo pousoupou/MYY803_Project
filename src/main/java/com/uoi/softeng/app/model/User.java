@@ -28,6 +28,10 @@ public class User implements UserDetails {
     private String address;
     private Integer zipcode;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name="role")
+    private Role role;
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "book_ownership",
@@ -53,6 +57,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
     private List<Request> requestsAsRecipient;
 
+
     public User(){
         this.ownedBooks = new ArrayList<>();
     }
@@ -64,6 +69,7 @@ public class User implements UserDetails {
         this.password = userDTO.password;
         this.address = userDTO.address;
         this.zipcode = userDTO.zipcode;
+        this.role = userDTO.role;
         this.ownedBooks = userDTO.ownedBooks;
         this.favouriteCategories = userDTO.favouriteCategories;
         this.favouriteAuthors = userDTO.favouriteAuthors;
@@ -98,10 +104,6 @@ public class User implements UserDetails {
     public void addBook(Book book){
         this.ownedBooks.add(book);
     }
-
-    @Enumerated(EnumType.STRING)
-    @Column(name="role")
-    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
