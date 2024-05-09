@@ -18,7 +18,7 @@ public class RegisterController {
     @Autowired
     IUserService userService;
 
-    @GetMapping("")
+    @RequestMapping("")
     public String registerPage(Model model) {
         model.addAttribute("user", new UserDTO());
 

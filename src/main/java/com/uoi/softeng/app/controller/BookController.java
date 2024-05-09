@@ -26,13 +26,13 @@ public class BookController {
         return iBookService.getAllBooks();
     }
 
-
-    @GetMapping("/add")
-    public String addBookForm(Model model) {
-        model.addAttribute("book", new BookDTO());
-
-        return "addBook";
-    }
+//
+//    @GetMapping("/add")
+//    public String addBookForm(Model model) {
+//        model.addAttribute("book", new BookDTO());
+//
+//        return "addBook";
+//    }
 
     @PostMapping("/add")
     public @ResponseBody String addBook(@RequestBody BookDTO bookDTO){

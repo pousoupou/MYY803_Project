@@ -8,7 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/login")
@@ -25,13 +24,15 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping("/login")
+    @PostMapping("/login")
     public String loginUser(@ModelAttribute("loginDTO") LoginDTO loginDTO, Model model){
         if(encoder.matches(loginDTO.getPassword(), userService.getUserByEmail(loginDTO.getEmail()).getPassword())){
             User user = userService.getUserByEmail(loginDTO.getEmail());
             model.addAttribute("user", user);
 
-            return "profile";
+            System.out.println("\n\nuser\n\n");
+
+            return "redirect:/user/home";
         }
 
         return "redirect:/error";

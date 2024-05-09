@@ -11,19 +11,20 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @Service
-public class UserService implements IUserService, UserDetailsService {
+public class UserService implements IUserService {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -58,7 +59,7 @@ public class UserService implements IUserService, UserDetailsService {
         userDTO.surname = WordUtils.capitalizeFully(userDTO.surname);
         userDTO.email = userDTO.email.toLowerCase();
         userDTO.address = WordUtils.capitalizeFully(userDTO.address);
-        userDTO.role = Role.USER;
+        userDTO.role = Role.ROLE_USER;
 
         User existing = this.getUserByEmail(userDTO.email);
 

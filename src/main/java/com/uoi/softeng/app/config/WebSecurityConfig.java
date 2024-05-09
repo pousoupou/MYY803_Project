@@ -2,65 +2,24 @@ package com.uoi.softeng.app.config;
 
 import com.uoi.softeng.app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-
-/*
- * @Configuration Indicates that a class declares one or more
- * @Bean methods and may be processed by the
- * Spring container to generate bean definitions
- * and service requests for those beans at runtime.
- * The class may also have code that configures other
- * spring functionalities.
- */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig{
 
     @Autowired
     private CustomSecuritySuccessHandler customSecuritySuccessHandler;
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(
-                (authz) -> authz
-                        .requestMatchers("/**", "/home", "/login", "/register", "/save", "/resources/**").permitAll()
-                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/**").hasAnyAuthority("USER")
-                        .anyRequest().authenticated()
-//                        .anyRequest().permitAll()
-        );
-
-        http.formLogin(fL -> fL.loginPage("/login")
-                .failureUrl("/login?error=true")
-                .successHandler(customSecuritySuccessHandler)
-                .usernameParameter("username")
-                .passwordParameter("password")
-        );
-
-        http.logout(logOut -> logOut.logoutUrl("/logout")
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/")
-        );
-
-
-        http.authenticationProvider(authenticationProvider());
-
-        return http.build();
-    }
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -85,5 +44,42 @@ public class WebSecurityConfig{
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        String[] PUBLIC_ENDS = {"/*"};
+        String[] ADMIN_ENDS = {"/admin/**"};
+        String[] USER_ENDS = {"/user/**"};
+        String[] API_ENDS = {"/api/**"};
+
+        http.csrf(
+                (csrf) -> csrf
+                        .ignoringRequestMatchers("/api/**")
+        );
+
+        http.authenticationProvider(authenticationProvider());
+
+        http.formLogin(fL -> fL.loginPage("/login")
+                .failureUrl("/login?error=true")
+                .successHandler(customSecuritySuccessHandler)
+                .usernameParameter("email")
+                .passwordParameter("password")
+        );
+
+        http.logout(logOut -> logOut.logoutUrl("/logout")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+        );
+
+        http.authorizeHttpRequests(
+                (auth) -> auth
+                        .requestMatchers(PUBLIC_ENDS).permitAll()
+//                        .requestMatchers(ADMIN_ENDS).hasRole("ADMIN")
+                        .requestMatchers(USER_ENDS).hasRole("USER")
+                        .anyRequest().authenticated()
+        );
+
+        return http.build();
     }
 }
