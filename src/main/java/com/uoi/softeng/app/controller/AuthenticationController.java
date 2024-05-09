@@ -16,10 +16,6 @@ public class AuthenticationController {
     @Autowired
     IUserService userService;
 
-//    @RequestMapping("/home")
-//    public String home(){
-//        return "home";
-//    }
 
     @RequestMapping("/login")
     public String loginPage(Model model){
@@ -33,17 +29,4 @@ public class AuthenticationController {
         return "register";
     }
 
-//    @RequestMapping("/save")
-//    public String registerUser(@ModelAttribute("user") User user, Model model){
-//
-//        if(userService.isUserPresent(user)){
-//            model.addAttribute("successMessage", "User already registered!");
-//            return "login";
-//        }
-//
-////        userService.(user);
-//        model.addAttribute("successMessage", "User registered successfully!");
-//
-//        return "login";
-//    }
 }
