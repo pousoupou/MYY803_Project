@@ -48,7 +48,7 @@ public class WebSecurityConfig{
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        String[] PUBLIC_ENDS = {"/*"};
+        String[] PUBLIC_ENDS = {"../static/**", "/hello", "/register", "/login", "/error"};
         String[] ADMIN_ENDS = {"/admin/**"};
         String[] USER_ENDS = {"/user/**"};
         String[] API_ENDS = {"/api/**"};
