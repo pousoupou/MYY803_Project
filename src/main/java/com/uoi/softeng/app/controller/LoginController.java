@@ -25,13 +25,13 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("login")
     public String loginUser(@ModelAttribute("loginDTO") LoginDTO loginDTO, Model model){
         if(encoder.matches(loginDTO.getPassword(), userService.getUserByEmail(loginDTO.getEmail()).getPassword())){
             User user = userService.getUserByEmail(loginDTO.getEmail());
             model.addAttribute("user", user);
 
-            return "profile";
+            return "redirect:/dashboard";
         }
 
         return "redirect:/error";
