@@ -21,6 +21,6 @@ public class HomeController {
         List<Book> allBooks = bookService.getAllBooks();
         model.addAttribute("allBooks", allBooks);
 
-        return "/user/home";
+        return "home";
     }
 }

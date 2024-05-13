@@ -15,20 +15,18 @@ public class AuthenticationController {
     @Autowired
     UserService userService;
 
-
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
-
-    @RequestMapping("/signin")
+    @RequestMapping("/login")
     public String login(){
         //model.addAttribute("loginDTO", new LoginDTO());
-        return "auth/login";
+        return "login";
     }
 
     @RequestMapping("/signup")
     public String register(Model model){
         model.addAttribute("user", new User());
-        return "auth/register";
+        return "register";
     }
 
 //    @GetMapping("/register")
@@ -60,14 +58,14 @@ public class AuthenticationController {
         if(userService.isUserPresent(user)){
             logger.info("User already registered: {}", user);
             model.addAttribute("successMessage", "User already registered!");
-            return "auth/login";
+            return "redirect:/login";
         }
 
         userService.saveUser(user);
         logger.info("User registered successfully: {}", user);
         model.addAttribute("successMessage", "User registered successfully!");
 
-        return "auth/login";
+        return "redirect:/login";
     }
 
 }
