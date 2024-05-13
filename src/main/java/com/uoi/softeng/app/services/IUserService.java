@@ -2,11 +2,12 @@ package com.uoi.softeng.app.services;
 
 import com.uoi.softeng.app.entity.LoginDTO;
 import com.uoi.softeng.app.model.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface IUserService {
+public interface IUserService extends UserDetailsService {
     List<User> getAllUsers();
 
     String userLogin(LoginDTO loginDTO);
