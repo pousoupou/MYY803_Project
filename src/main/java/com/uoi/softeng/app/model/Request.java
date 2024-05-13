@@ -1,6 +1,6 @@
 package com.uoi.softeng.app.model;
 
-import com.uoi.softeng.app.dto.RequestDTO;
+import com.uoi.softeng.app.entity.RequestDTO;
 import jakarta.persistence.*;
 
 @Entity

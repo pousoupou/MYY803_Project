@@ -1,6 +1,6 @@
 package com.uoi.softeng.app.services;
 
-import com.uoi.softeng.app.dto.BookDTO;
+import com.uoi.softeng.app.entity.BookDTO;
 import com.uoi.softeng.app.model.Book;
 import com.uoi.softeng.app.model.User;
 

@@ -1,4 +1,4 @@
-package com.uoi.softeng.app.dto;
+package com.uoi.softeng.app.entity;
 
 import lombok.Data;
 import lombok.Getter;

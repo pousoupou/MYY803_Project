@@ -1,11 +1,10 @@
 package com.uoi.softeng.app.model;
 
-import com.uoi.softeng.app.dto.BookDTO;
+import com.uoi.softeng.app.entity.BookDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.text.WordUtils;
-import org.hibernate.action.internal.OrphanRemovalAction;
 
 import java.util.ArrayList;
 import java.util.List;

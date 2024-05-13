@@ -11,7 +11,7 @@
 <body>
 <h1 style="text-align: center;">User Profile</h1>
 <div class="profile-info" style="display: flex; flex-direction: column; align-items: center;">
-    <form action="#" th:action="@{register/save}" th:object="${user}" method="post" style="width: 50%;">
+    <form action="#"   th:action="@{register/save}" th:object="${user}" method="post" style="width: 50%;">
 
         <!-- Name field -->
         <label for="inputName" class="form-label">First Name</label>
@@ -54,25 +54,25 @@
             Please enter your zip code.
         </div>
 
-        <div class="checkbox-container">
-            <label for="categories">Preferred Book Categories:</label>
-            <div class="checkbox-box">
-                <div class="column">
-                    <div th:each="cat, iterStat : ${categories}" th:if="${iterStat.index % 2 == 0}">
-                        <div class="checkbox-item">
-                            <input type="checkbox" th:value="${cat}" th:text="${cat}" id="categories" name="favCats"><br>
-                        </div>
-                    </div>
-                </div>
-                <div class="column">
-                    <div th:each="cat, iterStat : ${categories}" th:if="${iterStat.index % 2 == 1}">
-                        <div class="checkbox-item">
-                            <input type="checkbox" th:value="${cat}" th:text="${cat}" id="categories" name="favCats"><br>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--        <div class="checkbox-container">-->
+<!--            <label for="categories">Preferred Book Categories:</label>-->
+<!--            <div class="checkbox-box">-->
+<!--                <div class="column">-->
+<!--                    <div th:each="cat, iterStat : ${categories}" th:if="${iterStat.index % 2 == 0}">-->
+<!--                        <div class="checkbox-item">-->
+<!--                            <input type="checkbox" th:value="${cat}" th:text="${cat}" id="categories" name="favCats"><br>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="column">-->
+<!--                    <div th:each="cat, iterStat : ${categories}" th:if="${iterStat.index % 2 == 1}">-->
+<!--                        <div class="checkbox-item">-->
+<!--                            <input type="checkbox" th:value="${cat}" th:text="${cat}" id="categories" name="favCats"><br>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <button type="submit">Save Profile</button>
     </form>

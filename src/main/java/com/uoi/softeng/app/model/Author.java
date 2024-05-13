@@ -1,6 +1,6 @@
 package com.uoi.softeng.app.model;
 
-import com.uoi.softeng.app.dto.AuthorDTO;
+import com.uoi.softeng.app.entity.AuthorDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.uoi.softeng.app.dto;
+package com.uoi.softeng.app.entity;
 
 import com.uoi.softeng.app.model.Book;
 import com.uoi.softeng.app.model.User;

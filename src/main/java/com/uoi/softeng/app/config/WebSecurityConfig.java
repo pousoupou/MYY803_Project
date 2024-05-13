@@ -37,9 +37,9 @@ public class WebSecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
                 (authz) -> authz
-                        .requestMatchers("/**", "/home", "/login", "/register", "/save", "/resources/**").permitAll()
+                        .requestMatchers("/", "/home", "/login", "/register").permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/**").hasAnyAuthority("USER")
+                        .requestMatchers("/user/**").hasAnyAuthority("USER")
                         .anyRequest().authenticated()
 //                        .anyRequest().permitAll()
         );
@@ -47,6 +47,7 @@ public class WebSecurityConfig{
         http.formLogin(fL -> fL.loginPage("/login")
                 .failureUrl("/login?error=true")
                 .successHandler(customSecuritySuccessHandler)
+                .defaultSuccessUrl("/dashboard")
                 .usernameParameter("username")
                 .passwordParameter("password")
         );

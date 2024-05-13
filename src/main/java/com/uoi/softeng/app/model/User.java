@@ -1,6 +1,5 @@
 package com.uoi.softeng.app.model;
 
-import com.uoi.softeng.app.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -62,32 +61,32 @@ public class User implements UserDetails {
         this.ownedBooks = new ArrayList<>();
     }
 
-    public User(UserDTO userDTO){
-        this.name = userDTO.name;
-        this.surname = userDTO.surname;
-        this.email = userDTO.email;
-        this.password = userDTO.password;
-        this.address = userDTO.address;
-        this.zipcode = userDTO.zipcode;
-        this.role = userDTO.role;
-        this.ownedBooks = userDTO.ownedBooks;
-        this.favouriteCategories = userDTO.favouriteCategories;
-        this.favouriteAuthors = userDTO.favouriteAuthors;
+//    public User(UserDTO userDTO){
+//        this.name = userDTO.name;
+//        this.surname = userDTO.surname;
+//        this.email = userDTO.email;
+//        this.password = userDTO.password;
+//        this.address = userDTO.address;
+//        this.zipcode = userDTO.zipcode;
+//        this.role = userDTO.role;
+//        this.ownedBooks = userDTO.ownedBooks;
+//        this.favouriteCategories = userDTO.favouriteCategories;
+//        this.favouriteAuthors = userDTO.favouriteAuthors;
 //        this.requests = userDTO.requests;
-    }
+//    }
 
-    public void updateData(UserDTO userDTO){
-        this.name = userDTO.name;
-        this.surname = userDTO.surname;
-        this.email = userDTO.email;
-        //this.password = userDTO.password;
-        this.address = userDTO.address;
-        //this.zipcode = userDTO.zipcode;
-        //this.ownedBooks = userDTO.ownedBooks;
-        this.favouriteCategories = userDTO.favouriteCategories;
-        //this.favouriteAuthors = userDTO.favouriteAuthors;
+//    public void updateData(UserDTO userDTO){
+//        this.name = userDTO.name;
+//        this.surname = userDTO.surname;
+//        this.email = userDTO.email;
+//        //this.password = userDTO.password;
+//        this.address = userDTO.address;
+//        //this.zipcode = userDTO.zipcode;
+//        //this.ownedBooks = userDTO.ownedBooks;
+//        this.favouriteCategories = userDTO.favouriteCategories;
+//        //this.favouriteAuthors = userDTO.favouriteAuthors;
 //        this.requests = userDTO.requests;
-    }
+//    }
 
     public User omitPrivateData(){
         User privateUser = new User();

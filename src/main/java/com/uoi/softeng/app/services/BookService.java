@@ -1,11 +1,9 @@
 package com.uoi.softeng.app.services;
 
-import com.uoi.softeng.app.dto.BookDTO;
-import com.uoi.softeng.app.model.Author;
+import com.uoi.softeng.app.entity.BookDTO;
 import com.uoi.softeng.app.model.Book;
 import com.uoi.softeng.app.model.Category;
 import com.uoi.softeng.app.model.User;
-import com.uoi.softeng.app.repository.AuthorRepository;
 import com.uoi.softeng.app.repository.BookRepository;
 import com.uoi.softeng.app.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
