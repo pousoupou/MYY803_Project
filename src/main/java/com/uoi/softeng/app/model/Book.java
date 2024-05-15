@@ -1,12 +1,11 @@
 package com.uoi.softeng.app.model;
 
-import com.uoi.softeng.app.entity.BookDTO;
+import com.uoi.softeng.app.model.BookCategory;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.text.WordUtils;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Setter
@@ -14,95 +13,42 @@ import java.util.List;
 @Entity
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
-
-    private Integer isbn;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String bookid;
 
     private String title;
 
-    private Integer quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "author_id")
-    private Author author;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "book_book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private List<BookAuthor> bookAuthors;
 
-    @ManyToMany(mappedBy = "books", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Category> categories;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private BookCategory bookCategory;
 
-    @ManyToMany(mappedBy = "ownedBooks", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<User> users = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "request_id")
-    private Request request;
+    @ManyToOne
+    @JoinColumn(name = "offered_by_user_id")
+    private UserProfile offeredByUser;
 
-    public Book(){
-        this.quantity = 1;
-        this.users = new ArrayList<>();
+    @ManyToMany(mappedBy = "requestedBooks")
+    private List<UserProfile> requestingUsers;
+
+
+    public Book(String title, List<BookAuthor> bookAuthors, BookCategory bookCategory, List<UserProfile> requestingUsers) {
+        this.title = title;
+        this.bookAuthors = bookAuthors;
+        this.bookCategory = bookCategory;
+        this.requestingUsers = requestingUsers;
     }
 
-    public Book(Book book){
-        this.id = book.id;
-        this.isbn = book.isbn;
-        this.title = WordUtils.capitalizeFully(book.title);
-        this.quantity = book.quantity;
-        this.author = book.author;
-        this.categories = book.categories;
-        if(book.users == null || book.users.isEmpty()){
-            this.users = new ArrayList<>();
-        } else {
-            this.users = book.users;
-        }
-        this.request = book.request;
-    }
 
-    public Book(BookDTO bookDTO){
-        this.isbn = bookDTO.isbn;
-        this.title = WordUtils.capitalizeFully(bookDTO.title);
-        this.quantity = 1;
-//        this.categories = bookDTO.categories;
-    }
+    public Book() {
 
-    public void updateData(BookDTO bookDTO){
-        this.isbn = bookDTO.isbn;
-        this.title = WordUtils.capitalizeFully(bookDTO.title);
-        this.quantity = bookDTO.quantity;
-//        this.categories = bookDTO.categories;
-    }
-
-    public void updateData(Book book){
-//        this.isbn = book.getIsbn();
-//        this.title = book.getTitle();
-        this.quantity = book.getQuantity();
-//        this.categories = book.getCategories();
-    }
-
-    public Integer increaseQuantity(){
-        return this.quantity ++;
-    }
-
-    public Integer decreaseQuantity(){
-        return this.quantity --;
-    }
-
-    public void addUser(User user){
-        this.users.add(user);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        boolean ret = false;
-
-        if(o instanceof Book){
-            Book book = (Book) o;
-            ret = this.isbn.equals(book.isbn);
-        }
-        return ret;
-    }
-
-    @Override
-    public int hashCode(){
-        return this.isbn.hashCode();
     }
 }

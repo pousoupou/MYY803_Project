@@ -1,6 +1,7 @@
 package com.uoi.softeng.app.entity;
 
 import com.uoi.softeng.app.model.*;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,8 +17,8 @@ public class UserData {
     public String address;
     public Integer zipcode;
     public List<Book> ownedBooks;
-    public List<Category> favouriteCategories;
-    public List<Author> favouriteAuthors;
+    public List<BookCategory> favouriteCategories;
+    public List<BookAuthor> favouriteAuthors;
     public List<Request> requests;
 
 
@@ -25,7 +26,7 @@ public class UserData {
     public UserData(){
     }
 
-    public UserData(String name , String surname , String email , String password , String address , Integer zipcode , List<Book> ownedBooks , List<Category> favouriteCategories , List<Author> favouriteAuthors , List<Request> requests){
+    public UserData(String name , String surname , String email , String password , String address , Integer zipcode , List<Book> ownedBooks , List<BookCategory> favouriteCategories , List<BookAuthor> favouriteAuthors , List<Request> requests){
         super();
         this.name = name;
         this.surname = surname;
@@ -58,7 +59,7 @@ public class UserData {
 
 
 
-
+//
 
 
 

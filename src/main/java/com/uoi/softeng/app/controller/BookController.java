@@ -41,13 +41,13 @@ public class BookController {
         return "ADDED";
     }
 
-    @DeleteMapping("/delete/{isbn}")
-    public @ResponseBody String deleteBookByIsbn(@PathVariable("isbn") Integer isbn){
-        Book book = iBookService.getBookByISBN(isbn);
-        if(book.decreaseQuantity() <= 0){
-            iBookService.deleteBook(book);
-        }
-
-        return "DELETED";
-    }
+//    @DeleteMapping("/delete/{isbn}")
+//    public @ResponseBody String deleteBookByIsbn(@PathVariable("isbn") Integer isbn){
+//        Book book = iBookService.getBookByISBN(isbn);
+//        if(book.decreaseQuantity() <= 0){
+//            iBookService.deleteBook(book);
+//        }
+//
+//        return "DELETED";
+//    }
 }

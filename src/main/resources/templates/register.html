@@ -11,7 +11,7 @@
 <body>
 <h1 style="text-align: center;">User Profile</h1>
 <div class="profile-info" style="display: flex; flex-direction: column; align-items: center;">
-    <form action="#"   th:action="@{register/save}" th:object="${user}" method="post" style="width: 50%;">
+    <form action="#"   th:action="@{/save}" th:object="${user}" method="post" style="width: 50%;">
 
         <!-- Name field -->
         <label for="inputName" class="form-label">First Name</label>
@@ -53,6 +53,17 @@
         <div id="zipcodeHelpBlock" class="form-text">
             Please enter your zip code.
         </div>
+
+
+<!--        &lt;!&ndash; Role field &ndash;&gt;-->
+<!--        <label for="inputRole" class="form-label">Role</label>-->
+<!--        <select th:field="*{role}" id="inputRole" class="form-control" name="roles" required>-->
+<!--            <option value="">Select Role</option>-->
+<!--            <option th:each="role : ${allRoles}" th:value="${role.id}" th:text="${role.name}"></option>-->
+<!--        </select>-->
+<!--        <div id="roleHelpBlock" class="form-text">-->
+<!--            Please select your role.-->
+<!--        </div>-->
 
 <!--        <div class="checkbox-container">-->
 <!--            <label for="categories">Preferred Book Categories:</label>-->

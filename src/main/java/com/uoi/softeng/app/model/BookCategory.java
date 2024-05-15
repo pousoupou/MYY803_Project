@@ -10,10 +10,10 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Category {
+public class BookCategory {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String Id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String categoryid;
 
     private String categoryName;
 
@@ -25,21 +25,15 @@ public class Category {
     )
     private List<Book> books;
 
-    @ManyToMany(mappedBy = "favouriteCategories", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<User> users;
 
-    public Category(){
-        this.books = new ArrayList<>();
-        this.users = new ArrayList<>();
-    }
 
-    public Category(String categoryName){
+    public BookCategory(String categoryName, List<Book> books) {
         this.categoryName = categoryName;
-        this.books = new ArrayList<>();
-        this.users = new ArrayList<>();
+        this.books = books;
     }
 
-    public void addBook(Book book){
-        this.books.add(book);
+
+    public BookCategory() {
+
     }
 }

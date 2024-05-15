@@ -1,122 +1,66 @@
 package com.uoi.softeng.app.model;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Collection;
+import java.util.Collections;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import jakarta.persistence.*;
 
-@Setter
-@Getter
 @Entity
-public class User implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+@Table(name="users")
+public class User implements UserDetails{
 
-    private String name;
-    private String surname;
-    private String email;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    private int id;
+
+    @Column(name="user_name", unique=true)
+    private String username;
+
+    @Column(name="password")
     private String password;
-    private String address;
-    private Integer zipcode;
 
     @Enumerated(EnumType.STRING)
     @Column(name="role")
     private Role role;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "book_ownership",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
-    private List<Book> ownedBooks;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "user_categories",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private List<Category> favouriteCategories;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Author> favouriteAuthors;
-
-    @OneToMany(mappedBy = "requester", cascade = CascadeType.ALL)
-    private List<Request> requestsAsRequester;
-
-    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
-    private List<Request> requestsAsRecipient;
-
-
-    public User(){
-        this.ownedBooks = new ArrayList<>();
-    }
-
-//    public User(UserDTO userDTO){
-//        this.name = userDTO.name;
-//        this.surname = userDTO.surname;
-//        this.email = userDTO.email;
-//        this.password = userDTO.password;
-//        this.address = userDTO.address;
-//        this.zipcode = userDTO.zipcode;
-//        this.role = userDTO.role;
-//        this.ownedBooks = userDTO.ownedBooks;
-//        this.favouriteCategories = userDTO.favouriteCategories;
-//        this.favouriteAuthors = userDTO.favouriteAuthors;
-//        this.requests = userDTO.requests;
-//    }
-
-//    public void updateData(UserDTO userDTO){
-//        this.name = userDTO.name;
-//        this.surname = userDTO.surname;
-//        this.email = userDTO.email;
-//        //this.password = userDTO.password;
-//        this.address = userDTO.address;
-//        //this.zipcode = userDTO.zipcode;
-//        //this.ownedBooks = userDTO.ownedBooks;
-//        this.favouriteCategories = userDTO.favouriteCategories;
-//        //this.favouriteAuthors = userDTO.favouriteAuthors;
-//        this.requests = userDTO.requests;
-//    }
-
-    public User omitPrivateData(){
-        User privateUser = new User();
-
-        privateUser.name = this.name;
-        privateUser.surname = this.surname;
-        privateUser.email = this.email;
-        privateUser.address = this.address;
-        //privateUser.zipcode = this.zipcode;
-
-        return privateUser;
-    }
-
-    public void addBook(Book book){
-        this.ownedBooks.add(book);
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(this.role.name()));
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
+        return Collections.singletonList(authority);
     }
 
     @Override
     public String getPassword() {
-        return this.password;
+        return password;
     }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -137,4 +81,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }
