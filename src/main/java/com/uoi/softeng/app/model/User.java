@@ -44,7 +44,6 @@ public class User implements UserDetails{
         return username;
     }
 
-
     public void setId(int id) {
         this.id = id;
     }
@@ -60,7 +59,6 @@ public class User implements UserDetails{
     public void setRole(Role role) {
         this.role = role;
     }
-
 
     @Override
     public boolean isAccountNonExpired() {
@@ -81,6 +79,4 @@ public class User implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
-
-
 }

@@ -1,6 +1,7 @@
 package com.uoi.softeng.app.controller;
 
 import com.uoi.softeng.app.model.User;
+import com.uoi.softeng.app.model.UserProfile;
 import com.uoi.softeng.app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,21 +18,22 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/login")
+    @RequestMapping("/login")
     public String login(Model model) {
         return "login";
     }
 
-    @GetMapping("/login")
-    public String loginPage(Model model) {
-        return "login";
+    @RequestMapping("/register")
+    public String register(Model model) {
+        UserProfile userProfile = new UserProfile();
+        model.addAttribute("userProfile", userProfile);
+
+        return "register";
     }
 
-
-
-    @PostMapping("/register")
-    public String register(@ModelAttribute User user, Model model) {
+    @RequestMapping("/save")
+    public String save(@ModelAttribute User user, Model model) {
         userService.register(user);
-        return "redirect:/auth/login";
+        return "redirect:/login";
     }
 }

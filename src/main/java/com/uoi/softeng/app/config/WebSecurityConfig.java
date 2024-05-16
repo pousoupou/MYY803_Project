@@ -14,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-
 /*
  * @Configuration Indicates that a class declares one or more
  * @Bean methods and may be processed by the
@@ -34,9 +33,9 @@ public class WebSecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
                 (authz) -> authz
-                        .requestMatchers("/", "/home", "/login", "/register" , "/signup").permitAll()
-                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/user/**").hasAnyAuthority("USER")
+                        .requestMatchers("/", "/home", "/auth/*").permitAll()
+                        .requestMatchers("/admin/*").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/user/*").hasAnyAuthority("USER")
                         .anyRequest().authenticated()
 //                        .anyRequest().permitAll()
         );
@@ -53,7 +52,6 @@ public class WebSecurityConfig{
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
         );
-
 
         http.authenticationProvider(authenticationProvider());
 

@@ -16,12 +16,12 @@
 <body>
 <div class="container">
 
-    <form th:action="@{/login}" method="POST">
+    <form th:action="@{/auth/login}" method="POST">
         <h3 th:text="Login"></h3>
-        <input type="email" name="email"  th:placeholder="Email" /> <br /><br />
+        <input type="email" name="email" th:placeholder="Email" /> <br /><br />
         <input type="password" name="password" th:placeholder="Password" /> <br /><br />
         <button type="submit" class="btn btn-info col-2"> Login </button>
-        <a th:href="@{signup}" class="btn btn-primary col-2"> Register </a><br />
+        <a th:href="@{/auth/register}" class="btn btn-primary col-2"> Register </a><br />
 
         <div th:if="${param.error}"><p>Username or Password is invalid.</p></div> <br/>
 

@@ -1,6 +1,5 @@
 package com.uoi.softeng.app.model;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,9 +16,9 @@ public class UserProfile {
     private int id;
 
     private String username;
-    private String fullName;
+    private String name;
+    private String surname;
     private int age;
-
 
     @OneToMany(mappedBy = "offeredByUser", cascade = CascadeType.ALL)
     private List<Book> bookOffers;
@@ -32,7 +31,6 @@ public class UserProfile {
     )
     private List<Book> requestedBooks;
 
-
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "user_profile_book_category",
@@ -40,7 +38,6 @@ public class UserProfile {
             inverseJoinColumns = @JoinColumn(name = "book_category_id")
     )
     private List<BookCategory> favoriteBookCategories;
-
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -50,19 +47,16 @@ public class UserProfile {
     )
     private List<BookAuthor> favoriteBookAuthors;
 
-
-
-
-    public UserProfile(String username, String fullName, int age, List<Book> bookOffers, List<Book> requestedBooks, List<BookCategory> favoriteBookCategories, List<BookAuthor> favoriteBookAuthors) {
+    public UserProfile(String username, String name, String surname, int age, List<Book> bookOffers, List<Book> requestedBooks, List<BookCategory> favoriteBookCategories, List<BookAuthor> favoriteBookAuthors) {
         this.username = username;
-        this.fullName = fullName;
+        this.name = name;
+        this.surname = surname;
         this.age = age;
         this.bookOffers = bookOffers;
         this.requestedBooks = requestedBooks;
         this.favoriteBookCategories = favoriteBookCategories;
         this.favoriteBookAuthors = favoriteBookAuthors;
     }
-
 
     public UserProfile() {
 
