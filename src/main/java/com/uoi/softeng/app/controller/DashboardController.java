@@ -27,7 +27,7 @@ public class DashboardController {
         String currentPrincipalName = authentication.getName();
         System.out.println(currentPrincipalName);
 
-        Optional<User> user = userRepository.findByEmail(currentPrincipalName);
+        Optional<User> user = userRepository.findByUsername(currentPrincipalName);
         model.addAttribute("user", user);
 
 

@@ -7,27 +7,12 @@ import com.uoi.softeng.app.model.User;
 import java.util.List;
 
 public interface IBookService {
-    List<Book> getAllBooks();
+    List<Book> findAll();
 
-    List<User> getAllOwners();
+    Book findById(Long id);
 
-    void addOwner(User user);
+    Book save(Book book);
 
-    void addBook(BookDTO bookDTO);
-
-    void addBook(Book book);
-
-    Book getBookByISBN(Integer isbn);
-
-    void updateBook(Book book);
-
-    void updateBookById(String id, BookDTO bookDTO);
-
-    void updateBookByISBN(Integer isbn, BookDTO bookDTO);
-
-    void updateBookByTitle(String name, BookDTO bookDTO);
-
-    void deleteBookByISBN(Integer isbn);
 
     void deleteBook(Book book);
 }

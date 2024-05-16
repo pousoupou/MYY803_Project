@@ -39,7 +39,7 @@ public class UserProfile {
             joinColumns = @JoinColumn(name = "user_profile_id"),
             inverseJoinColumns = @JoinColumn(name = "book_category_id")
     )
-    private List<BookCategory> favouriteBookCategories;
+    private List<BookCategory> favoriteBookCategories;
 
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -53,12 +53,13 @@ public class UserProfile {
 
 
 
-    public UserProfile(String username, String fullName, int age, List<Book> bookOffers, List<BookCategory> favouriteBookCategories, List<BookAuthor> favoriteBookAuthors) {
+    public UserProfile(String username, String fullName, int age, List<Book> bookOffers, List<Book> requestedBooks, List<BookCategory> favoriteBookCategories, List<BookAuthor> favoriteBookAuthors) {
         this.username = username;
         this.fullName = fullName;
         this.age = age;
         this.bookOffers = bookOffers;
-        this.favouriteBookCategories = favouriteBookCategories;
+        this.requestedBooks = requestedBooks;
+        this.favoriteBookCategories = favoriteBookCategories;
         this.favoriteBookAuthors = favoriteBookAuthors;
     }
 

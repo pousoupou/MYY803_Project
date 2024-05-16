@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface BookCategoryMapper extends JpaRepository<BookCategory, String> {
 
-        List<BookCategory> findByName(String name);
+        List<BookCategory> findByCategoryName(String categoryName);
 }

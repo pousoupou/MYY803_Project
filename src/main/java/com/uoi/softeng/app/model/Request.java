@@ -17,7 +17,8 @@ public class Request {
     @JoinColumn(name = "recipient_id")
     private User recipient;
 
-    @OneToOne(mappedBy = "request")
+    @OneToOne
+    @JoinColumn(name = "book_id")
     private Book book;
 
     private String type;        // Either REQUEST, or OFFER

@@ -16,10 +16,16 @@ public class BookAuthor {
 
     private String name;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(
+            name = "book_book_author",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
     private List<Book> books;
 
-    @ManyToMany(mappedBy = "favoriteBookAuthors", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+
+    @ManyToMany(mappedBy = "favoriteBookAuthors")
     private List<UserProfile> users;
 
     public BookAuthor(String name, List<Book> books) {

@@ -15,39 +15,6 @@ public class BookController {
     @Autowired
     private IBookService iBookService;
 
-    public @ResponseBody Book getBookByIsbn(@PathVariable("isbn") Integer isbn){
-        Book book = iBookService.getBookByISBN(isbn);
 
-        return iBookService.getBookByISBN(isbn);
-    }
 
-    @GetMapping("/get")
-    public @ResponseBody List<Book> getAllBooks(){
-        return iBookService.getAllBooks();
-    }
-
-//
-//    @GetMapping("/add")
-//    public String addBookForm(Model model) {
-//        model.addAttribute("book", new BookDTO());
-//
-//        return "addBook";
-//    }
-
-    @PostMapping("/add")
-    public @ResponseBody String addBook(@RequestBody BookDTO bookDTO){
-        iBookService.addBook(bookDTO);
-
-        return "ADDED";
-    }
-
-//    @DeleteMapping("/delete/{isbn}")
-//    public @ResponseBody String deleteBookByIsbn(@PathVariable("isbn") Integer isbn){
-//        Book book = iBookService.getBookByISBN(isbn);
-//        if(book.decreaseQuantity() <= 0){
-//            iBookService.deleteBook(book);
-//        }
-//
-//        return "DELETED";
-//    }
 }

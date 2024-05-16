@@ -8,11 +8,11 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 
-public interface UserRepository extends JpaRepository<User, String> {
-    @Query(value = "SELECT * FROM user WHERE email = :email AND password = :password", nativeQuery = true)
-    User findByEmailAndPassword(String email, String password);
+public interface UserRepository extends JpaRepository<User, Integer> {
+    @Query(value = "SELECT * FROM user WHERE username_name = :username AND password = :password", nativeQuery = true)
 
-    Optional<User> findByEmail(String email);
 
-    //Optional<User> findByUsername(String username);
+    //Optional<User> findByEmail(String email);
+
+    Optional<User> findByUsername(String username);
 }

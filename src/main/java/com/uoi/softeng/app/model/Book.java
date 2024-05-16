@@ -14,17 +14,17 @@ import java.util.List;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String bookid;
+    private int bookid;
 
     private String title;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "book_book_author",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id")
-    )
+    @ManyToMany(mappedBy = "books")
+//    @JoinTable(
+//            name = "book_author",
+//            joinColumns = @JoinColumn(name = "book_id"),
+//            inverseJoinColumns = @JoinColumn(name = "author_id")
+//    )
     private List<BookAuthor> bookAuthors;
 
     @ManyToOne
@@ -39,6 +39,9 @@ public class Book {
     @ManyToMany(mappedBy = "requestedBooks")
     private List<UserProfile> requestingUsers;
 
+
+    @OneToOne(mappedBy = "book")
+    private Request requests;
 
     public Book(String title, List<BookAuthor> bookAuthors, BookCategory bookCategory, List<UserProfile> requestingUsers) {
         this.title = title;
