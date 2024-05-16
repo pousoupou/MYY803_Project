@@ -34,6 +34,6 @@ public class AuthController {
     @RequestMapping("/save")
     public String save(@ModelAttribute User user, Model model) {
         userService.register(user);
-        return "redirect:/login";
+        return "redirect:/auth/login";
     }
 }
