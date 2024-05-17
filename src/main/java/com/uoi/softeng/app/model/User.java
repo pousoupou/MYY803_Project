@@ -3,12 +3,16 @@ package com.uoi.softeng.app.model;
 import java.util.Collection;
 import java.util.Collections;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
 
+@Setter
+@Getter
 @Entity
 @Table(name="users")
 public class User implements UserDetails{
@@ -42,22 +46,6 @@ public class User implements UserDetails{
     @Override
     public String getUsername() {
         return username;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     @Override

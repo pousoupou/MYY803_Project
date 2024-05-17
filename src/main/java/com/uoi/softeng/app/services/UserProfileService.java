@@ -1,9 +1,6 @@
 package com.uoi.softeng.app.services;
 
-import com.uoi.softeng.app.model.UserProfile;
-
 import java.util.List;
-
 
 public interface UserProfileService {
 
@@ -18,8 +15,4 @@ public interface UserProfileService {
     <UserProfileFormData> List<UserProfileFormData> retrieveRequestingUsers(int bookId);
     void deleteBookOffer(String username , int bookId);
     void deleteBookRequest(String username , int bookId);
-
-
-
-
 }

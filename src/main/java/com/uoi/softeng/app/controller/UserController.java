@@ -22,10 +22,10 @@ public class UserController {
         return "mainMenu";
     }
 
-    @GetMapping("/profile")
+    @RequestMapping("/profile")
     public String retrieveProfile(Model model) {
         // Retrieve user profile and add to model
-        return "profile";
+        return "/user/profile";
     }
 
     @PostMapping("/profile/save")

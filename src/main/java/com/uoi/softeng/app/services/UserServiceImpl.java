@@ -1,9 +1,12 @@
 package com.uoi.softeng.app.services;
 
 import com.uoi.softeng.app.mappers.UserMapper;
+import com.uoi.softeng.app.model.Role;
 import com.uoi.softeng.app.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 @Slf4j
@@ -18,19 +23,15 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
     UserMapper userDAO;
-
-
 
     @Override
     public void saveUser(User user) {
-        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodedPassword = encoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        userDAO.save(user);
 
+        userDAO.save(user);
     }
 
     @Override
@@ -45,6 +46,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User findByEmail(String email){
+        return userDAO.findByUsername(email);
+    }
+
+    @Override
     public void register(User user) {
         // Step 1: Validate the user data (this is a simplified example)
         if (user == null || user.getUsername() == null || user.getPassword() == null) {
@@ -55,11 +61,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
 
         // Step 2: Encode the password
-        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodedPassword = encoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
         // Step 3: Save the user
         try {
+            user.setRole(Role.ROLE_USER);
             userDAO.save(user);
         } catch (Exception e) {
             // Step 4: Handle exceptions
@@ -90,7 +98,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        User user = userDAO.findByUsername(username);
+
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRoleToAuthority(user.getRole()));
+    }
+
+    private Collection<? extends GrantedAuthority> mapRoleToAuthority(Role role) {
+        return Collections.singleton(new SimpleGrantedAuthority(role.name()));
     }
 
     // Method defined in Spring Security UserDetailsService interface

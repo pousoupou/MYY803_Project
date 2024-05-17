@@ -11,14 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Optional;
 
-
 @Controller
 public class DashboardController {
 
     @Autowired
     private UserRepository userRepository;
-
-
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
@@ -29,8 +26,6 @@ public class DashboardController {
 
         Optional<User> user = userRepository.findByUsername(currentPrincipalName);
         model.addAttribute("user", user);
-
-
 
         return "dashboard";
     }

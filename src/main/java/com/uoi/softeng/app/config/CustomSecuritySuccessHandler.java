@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 public class CustomSecuritySuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
     @Override
     protected void handle(
             HttpServletRequest request,
@@ -29,22 +30,18 @@ public class CustomSecuritySuccessHandler extends SimpleUrlAuthenticationSuccess
     }
 
     protected String determineTargetUrl(Authentication authentication){
-        String url = "/";
+        String url = "/login?error=true";
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        List<String> roles = new ArrayList<String>();
 
-        if (authentication != null && authentication.isAuthenticated()){
+        for(GrantedAuthority a : authorities){
+            roles.add(a.getAuthority());
+        }
 
-            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-            List<String> roles = new ArrayList<String>();
-
-            for(GrantedAuthority a : authorities){
-                roles.add(a.getAuthority());
-            }
-
-            if(roles.contains("ADMIN")){
-                url = "/admin/dashboard";
-            }else if(roles.contains("USER")) {
-                url = "/user/dashboard"; // ZAS added /user/ here
-            }
+        if(roles.contains("ADMIN")){
+            url = "/admin/dashboard";
+        }else if(roles.contains("USER")) {
+            url = "/user/profile";
         }
 
         return url;
