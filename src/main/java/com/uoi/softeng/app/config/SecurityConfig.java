@@ -35,7 +35,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form.loginPage("/auth/login").loginProcessingUrl("/auth/loginAction").successForwardUrl("/user/profile"))
+                .formLogin(form -> form.loginPage("/auth/login").loginProcessingUrl("/auth/loginAction").successForwardUrl("/user/dashboard"))
                 .logout(withDefaults());
         return http.build();
     }

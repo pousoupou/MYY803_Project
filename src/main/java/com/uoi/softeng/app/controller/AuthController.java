@@ -41,7 +41,7 @@ public class AuthController {
         if(!userService.isUserPresent(user)){
             throw new UsernameNotFoundException("User not found");
         } else if(encoder.matches(password, userService.findByEmail(user.getUsername()).getPassword())) {
-            return "redirect:/user/profile";
+            return "redirect:/user/dashboard";
         } else {
             throw new RuntimeException("Wrong password");
         }
