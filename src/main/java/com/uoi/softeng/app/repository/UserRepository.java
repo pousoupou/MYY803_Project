@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-//    @Query(value = "SELECT * FROM users WHERE user_name = :username AND password = :password", nativeQuery = true)
+
 
 
 

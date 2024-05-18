@@ -24,7 +24,7 @@ public class DashboardController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        System.out.println(currentPrincipalName);
+        //System.out.println(currentPrincipalName);
 
         User user = userRepository.findByUsername(currentPrincipalName);
         model.addAttribute("user", user);

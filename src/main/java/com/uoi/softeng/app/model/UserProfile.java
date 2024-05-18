@@ -20,6 +20,7 @@ public class UserProfile {
     private String surname;
     private int age;
 
+
     @OneToMany(mappedBy = "offeredByUser", cascade = CascadeType.ALL)
     private List<Book> bookOffers;
 

@@ -17,22 +17,7 @@ public class UserController {
     @Autowired
     private UserProfileService userProfileService;
 
-    @GetMapping("/main")
-    public String getUserMainMenu() {
-        return "mainMenu";
-    }
 
-    @RequestMapping("/profile")
-    public String retrieveProfile(Model model) {
-        // Retrieve user profile and add to model
-        return "/user/profile";
-    }
-
-    @PostMapping("/profile/save")
-    public <UserProfileFormData> String saveProfile(@ModelAttribute UserProfileFormData userProfileFormData, Model model) {
-        userProfileService.save(userProfileFormData);
-        return "redirect:/user/profile";
-    }
 
     @GetMapping("/books")
     public String listBookOffers(Model model) {

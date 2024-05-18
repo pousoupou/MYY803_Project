@@ -1,8 +1,10 @@
 package com.uoi.softeng.app.services;
 
 import com.uoi.softeng.app.mappers.UserMapper;
+import com.uoi.softeng.app.mappers.UserProfileMapper;
 import com.uoi.softeng.app.model.Role;
 import com.uoi.softeng.app.model.User;
+import com.uoi.softeng.app.model.UserProfile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,6 +26,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     UserMapper userDAO;
+    @Autowired
+    private UserProfileMapper userProfileMapper;
 
     @Override
     public void saveUser(User user) {
@@ -69,6 +73,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         try {
             user.setRole(Role.ROLE_USER);
             userDAO.save(user);
+            UserProfile userProfile = new UserProfile();
+            userProfile.setUsername(user.getUsername());
+            userProfile.setName(user.getFirstName());
+            userProfile.setSurname(user.getLastName());
+            userProfileMapper.save(userProfile);
         } catch (Exception e) {
             // Step 4: Handle exceptions
             log.error("Error registering user: {}", e.getMessage());
@@ -107,15 +116,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return Collections.singleton(new SimpleGrantedAuthority(role.name()));
     }
 
-    // Method defined in Spring Security UserDetailsService interface
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        // orElseThrow method of Optional container that throws an exception if Optional result  is null
-//        return userDAO.findByUsername(username).orElseThrow(
-//                ()-> new UsernameNotFoundException(
-//                        String.format("USER_NOT_FOUND %s", username)
-//                ));
-//    }
 
 
 }

@@ -10,11 +10,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/book")
+@RequestMapping("/user")
 public class BookController {
     @Autowired
     private IBookService iBookService;
 
+
+    @RequestMapping("/offer-book")
+    public String showOfferBookForm(Model model) {
+        model.addAttribute("bookDTO", new BookDTO());
+        return "offerBook"; // This is the name of the Thymeleaf template for offering a book
+    }
 
 
 }
